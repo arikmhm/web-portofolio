@@ -1,16 +1,21 @@
 "use client";
 
 import { useLocale } from "@/lib/locale-context";
+import { useScrollReveal } from "@/lib/useScrollReveal";
 import { portfolioData } from "@/data/portfolio";
 
 const { projects } = portfolioData;
 
 export default function ProjectsSection() {
   const { locale, t } = useLocale();
+  const { ref, isVisible } = useScrollReveal();
 
   return (
     <section id="projects" className="px-6 py-24">
-      <div className="mx-auto max-w-6xl">
+      <div
+        ref={ref}
+        className={`mx-auto max-w-6xl transition-all duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+      >
         <h2 className="text-3xl font-bold tracking-tight text-neutral-900">
           {locale === "en" ? "Projects" : "Proyek"}
         </h2>
@@ -21,7 +26,7 @@ export default function ProjectsSection() {
               href={project.notionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group border border-neutral-200 transition-colors hover:border-neutral-400"
+              className="group border border-neutral-200 transition-all duration-300 hover:border-neutral-400 hover:-translate-y-1 hover:shadow-lg"
             >
               {/* Thumbnail placeholder */}
               <div className="aspect-video bg-neutral-100" />

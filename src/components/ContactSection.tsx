@@ -1,16 +1,21 @@
 "use client";
 
 import { useLocale } from "@/lib/locale-context";
+import { useScrollReveal } from "@/lib/useScrollReveal";
 import { portfolioData } from "@/data/portfolio";
 
 const { contact, socialLinks } = portfolioData;
 
 export default function ContactSection() {
   const { t } = useLocale();
+  const { ref, isVisible } = useScrollReveal();
 
   return (
     <section id="contact" className="px-6 py-24">
-      <div className="mx-auto max-w-6xl">
+      <div
+        ref={ref}
+        className={`mx-auto max-w-6xl transition-all duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+      >
         <h2 className="text-3xl font-bold tracking-tight text-neutral-900">
           {t(contact.heading)}
         </h2>

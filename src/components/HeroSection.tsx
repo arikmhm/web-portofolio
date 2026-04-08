@@ -1,16 +1,21 @@
 "use client";
 
 import { useLocale } from "@/lib/locale-context";
+import { useScrollReveal } from "@/lib/useScrollReveal";
 import { portfolioData } from "@/data/portfolio";
 
 const { personalInfo, socialLinks } = portfolioData;
 
 export default function HeroSection() {
   const { t } = useLocale();
+  const { ref, isVisible } = useScrollReveal(0.1);
 
   return (
     <section id="hero" className="px-6 py-32 sm:py-40">
-      <div className="mx-auto max-w-6xl">
+      <div
+        ref={ref}
+        className={`mx-auto max-w-6xl transition-all duration-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+      >
         <h1 className="text-5xl font-bold tracking-tight text-neutral-900 sm:text-7xl">
           {personalInfo.name}
         </h1>
