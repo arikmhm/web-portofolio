@@ -1,17 +1,13 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <main className="mt-16 flex-1">
-        {/* Hero */}
-        <section id="hero" className="px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <p className="text-neutral-400">Phase 5a</p>
-          </div>
-        </section>
+        <HeroSection />
 
         {/* About */}
         <section id="about" className="px-6 py-24">
