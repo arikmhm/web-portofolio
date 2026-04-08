@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
+import TechStackSection from "@/components/TechStackSection";
 
 export default function Home() {
   return (
@@ -12,12 +13,7 @@ export default function Home() {
 
         <AboutSection />
 
-        {/* Tech Stack */}
-        <section id="tech-stack" className="px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <p className="text-neutral-400">Phase 5c</p>
-          </div>
-        </section>
+        <TechStackSection />
 
         {/* Projects */}
         <section id="projects" className="px-6 py-24">
