@@ -5,6 +5,7 @@ import AboutSection from "@/components/AboutSection";
 import TechStackSection from "@/components/TechStackSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ExperienceSection from "@/components/ExperienceSection";
+import EducationSection from "@/components/EducationSection";
 
 export default function Home() {
   return (
@@ -21,12 +22,7 @@ export default function Home() {
 
         <ExperienceSection />
 
-        {/* Education */}
-        <section id="education" className="px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <p className="text-neutral-400">Phase 5f</p>
-          </div>
-        </section>
+        <EducationSection />
 
         {/* Contact */}
         <section id="contact" className="px-6 py-24">
