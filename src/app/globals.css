@@ -16,3 +16,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
 }
+
+section[id] {
+  scroll-margin-top: 5rem;
+}

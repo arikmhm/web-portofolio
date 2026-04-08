@@ -16,35 +16,27 @@ export default function Navbar() {
   const { locale, toggleLocale, t } = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  function handleNavClick(sectionId: string) {
-    setMenuOpen(false);
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-neutral-200 bg-white/90 backdrop-blur-sm">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         {/* Logo */}
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        <a
+          href="#hero"
           className="text-lg font-bold tracking-tight text-neutral-900"
         >
           arikmhm
-        </button>
+        </a>
 
         {/* Desktop nav links */}
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <li key={link.id}>
-              <button
-                onClick={() => handleNavClick(link.id)}
+              <a
+                href={`#${link.id}`}
                 className="text-sm text-neutral-600 transition-colors hover:text-neutral-900"
               >
                 {t(link.label)}
-              </button>
+              </a>
             </li>
           ))}
         </ul>
@@ -54,6 +46,7 @@ export default function Navbar() {
           {/* Language toggle */}
           <button
             onClick={toggleLocale}
+            aria-label={locale === "en" ? "Switch to Bahasa Indonesia" : "Switch to English"}
             className="rounded-[4px] border border-neutral-300 px-3 py-1 text-xs font-medium text-neutral-700 transition-colors hover:border-neutral-900 hover:text-neutral-900"
           >
             {locale === "en" ? "ID" : "EN"}
@@ -64,6 +57,7 @@ export default function Navbar() {
             onClick={() => setMenuOpen(!menuOpen)}
             className="flex flex-col gap-1.5 md:hidden"
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
           >
             <span
               className={`block h-0.5 w-5 bg-neutral-900 transition-transform ${menuOpen ? "translate-y-2 rotate-45" : ""}`}
@@ -84,12 +78,13 @@ export default function Navbar() {
           <ul className="flex flex-col px-6 py-4">
             {navLinks.map((link) => (
               <li key={link.id}>
-                <button
-                  onClick={() => handleNavClick(link.id)}
-                  className="w-full py-3 text-left text-sm text-neutral-600 transition-colors hover:text-neutral-900"
+                <a
+                  href={`#${link.id}`}
+                  onClick={() => setMenuOpen(false)}
+                  className="block w-full py-3 text-left text-sm text-neutral-600 transition-colors hover:text-neutral-900"
                 >
                   {t(link.label)}
-                </button>
+                </a>
               </li>
             ))}
           </ul>

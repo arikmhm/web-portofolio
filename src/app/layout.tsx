@@ -9,6 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://arikmhm.vercel.app"),
   title: "Muhammad Ariyanto — Software Engineer",
   description:
     "Portfolio of Muhammad Ariyanto, a Software Engineer specializing in modern web applications. Built with Next.js and TypeScript.",
