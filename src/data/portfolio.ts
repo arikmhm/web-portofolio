@@ -17,7 +17,7 @@ export const portfolioData: PortfolioData = {
   socialLinks: {
     github: "https://github.com/arikmhm",
     linkedin: "https://linkedin.com/in/arikmhm",
-    email: "arik.firmansyah@email.com",
+    email: "mhm.ariyanto@gmail.com",
     cvUrl: "/files/arik-firmansyah-cv.pdf",
   },
 

@@ -1,23 +1,21 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import HeroSection from "@/components/HeroSection";
-import AboutSection from "@/components/AboutSection";
-import TechStackSection from "@/components/TechStackSection";
+import ProfileSection from "@/components/ProfileSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import EducationSection from "@/components/EducationSection";
 import ContactSection from "@/components/ContactSection";
+import BackToTop from "@/components/BackToTop";
+import ChatWidget from "@/components/ChatWidget";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="mt-16 flex-1">
-        <HeroSection />
-
-        <AboutSection />
-
-        <TechStackSection />
+      <BackToTop />
+      <ChatWidget />
+      <main className="flex-1 divide-y divide-gray-200">
+        <ProfileSection />
 
         <ProjectsSection />
 
