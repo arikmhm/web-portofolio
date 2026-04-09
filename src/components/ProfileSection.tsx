@@ -16,7 +16,6 @@ import {
   SiPostgresql,
   SiGo,
 } from "react-icons/si";
-import { FaFileDownload } from "react-icons/fa";
 import { useLocale } from "@/lib/locale-context";
 import { portfolioData } from "@/data/portfolio";
 
@@ -68,11 +67,7 @@ export default function ProfileSection() {
                 alt={personalInfo.name}
                 fill
                 priority
-                className={`object-cover object-top transition-all duration-300 ${
-                  isMobile
-                    ? "grayscale-50"
-                    : "grayscale hover:grayscale-0"
-                }`}
+                className="object-cover object-top grayscale-50 transition-all duration-300 hover:grayscale-0"
               />
             </div>
             <div className="mt-12 text-center">

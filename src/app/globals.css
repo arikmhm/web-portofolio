@@ -30,6 +30,13 @@ section[id] {
   scroll-margin-top: 5rem;
 }
 
+/* Disable image drag and context menu */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
 /* Animations */
 @layer utilities {
   @keyframes loading-bar {
