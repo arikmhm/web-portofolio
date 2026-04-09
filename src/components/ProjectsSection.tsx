@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import { useLocale } from "@/lib/locale-context";
 import { portfolioData } from "@/data/portfolio";
 
@@ -64,17 +64,6 @@ export default function ProjectsSection() {
                 {/* Hover overlay with action icons */}
                 <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/60">
                   <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border border-white p-3 text-white transition-colors duration-300 hover:bg-white hover:text-black"
-                        aria-label={`${project.title} GitHub`}
-                      >
-                        <FaGithub className="text-lg" />
-                      </a>
-                    )}
                     {project.demoUrl && (
                       <a
                         href={project.demoUrl}
