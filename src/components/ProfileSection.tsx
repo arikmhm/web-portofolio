@@ -31,17 +31,17 @@ const GitHubCalendar = dynamic<
 
 const { personalInfo, socialLinks } = portfolioData;
 
-const technologies: { Icon: IconType; name: string }[] = [
-  { Icon: SiReact, name: "React" },
-  { Icon: SiNextdotjs, name: "Next.js" },
-  { Icon: SiTypescript, name: "TypeScript" },
-  { Icon: SiJavascript, name: "JavaScript" },
-  { Icon: SiLaravel, name: "Laravel" },
-  { Icon: SiPhp, name: "PHP" },
-  { Icon: SiExpress, name: "Express" },
-  { Icon: SiTailwindcss, name: "Tailwind" },
-  { Icon: SiPostgresql, name: "PostgreSQL" },
-  { Icon: SiGo, name: "Go" },
+const technologies: { Icon: IconType; name: string; color: string }[] = [
+  { Icon: SiReact, name: "React", color: "#61DAFB" },
+  { Icon: SiNextdotjs, name: "Next.js", color: "#000000" },
+  { Icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+  { Icon: SiJavascript, name: "JavaScript", color: "#F7DF1E" },
+  { Icon: SiLaravel, name: "Laravel", color: "#FF2D20" },
+  { Icon: SiPhp, name: "PHP", color: "#777BB4" },
+  { Icon: SiExpress, name: "Express", color: "#000000" },
+  { Icon: SiTailwindcss, name: "Tailwind", color: "#06B6D4" },
+  { Icon: SiPostgresql, name: "PostgreSQL", color: "#4169E1" },
+  { Icon: SiGo, name: "Go", color: "#00ADD8" },
 ];
 
 export default function ProfileSection() {
@@ -107,9 +107,9 @@ export default function ProfileSection() {
               : "Teknologi yang Saya Gunakan"}
           </h2>
           <div className="flex flex-wrap justify-center gap-12">
-            {technologies.map(({ Icon, name }) => (
+            {technologies.map(({ Icon, name, color }) => (
               <div key={name} className="text-center">
-                <Icon className="mx-auto mb-3 text-3xl text-black" />
+                <Icon className="mx-auto mb-3 text-3xl" style={{ color }} />
                 <h3 className="text-sm font-light text-gray-600">{name}</h3>
               </div>
             ))}
