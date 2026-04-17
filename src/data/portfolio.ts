@@ -126,38 +126,26 @@ export const portfolioData: PortfolioData = {
   experiences: [
     {
       position: {
-        id: "Frontend Developer Intern",
-        en: "Frontend Developer Intern",
+        id: "Backend Developer Intern",
+        en: "Backend Developer Intern",
       },
-      company: "PT Teknologi Nusantara",
-      period: "Januari 2025 - April 2025",
+      company: "PT Mitra Kasih Perkasa (MKP)",
+      period: "Agustus 2025 - Februari 2026",
       description: {
-        id: "Mengembangkan komponen UI untuk dashboard internal perusahaan menggunakan React dan TypeScript. Berkolaborasi dengan tim backend untuk integrasi REST API. Meningkatkan performa halaman sebesar 30% melalui code splitting dan lazy loading.",
-        en: "Developed UI components for the company's internal dashboard using React and TypeScript. Collaborated with the backend team on REST API integration. Improved page performance by 30% through code splitting and lazy loading.",
+        id: "Mengembangkan fitur validasi ticket di salah satu produk utama perusahaan menggunakan Go dan PostgreSQL. ",
+        en: "Developed ticket validation features for one of the company's main products using Go and PostgreSQL.",
       },
     },
     {
       position: {
-        id: "Freelance Web Developer",
-        en: "Freelance Web Developer",
-      },
-      company: "Self-employed",
-      period: "Mei 2024 - Desember 2024",
-      description: {
-        id: "Membangun 5+ website untuk klien UMKM lokal termasuk landing page, toko online, dan company profile. Mengelola proyek dari requirements gathering hingga deployment.",
-        en: "Built 5+ websites for local SME clients including landing pages, online stores, and company profiles. Managed projects from requirements gathering to deployment.",
-      },
-    },
-    {
-      position: {
-        id: "Ketua Divisi IT - Himpunan Mahasiswa Sistem Informasi",
-        en: "Head of IT Division - Information Systems Student Association",
+        id: "Asisten Laboratorium - Universitas Dian Nuswantoro",
+        en: "Laboratory Assistant - Universitas Dian Nuswantoro",
       },
       company: "Universitas Dian Nuswantoro",
-      period: "Agustus 2023 - Juli 2024",
+      period: "Juni 2024 - Februari 2025",
       description: {
-        id: "Memimpin tim 8 orang dalam pengembangan website organisasi dan sistem registrasi event. Mengadakan workshop coding untuk 100+ mahasiswa.",
-        en: "Led a team of 8 in developing the organization's website and event registration system. Organized coding workshops for 100+ students.",
+        id: "Membantu dosen dalam praktikum pemrograman web dasar untuk 60+ mahasiswa. Memberikan bimbingan teknis, menjawab pertanyaan, dan menilai tugas praktikum.",
+        en: "Assisted professors in basic web programming labs for over 60 students. Provided technical guidance, answered questions, and evaluated lab assignments.",
       },
     },
   ],
@@ -172,24 +160,9 @@ export const portfolioData: PortfolioData = {
 
   certifications: [
     {
-      name: "Meta Front-End Developer Professional Certificate",
-      issuer: "Meta (via Coursera)",
-      year: "2024",
-    },
-    {
-      name: "Google UX Design Professional Certificate",
-      issuer: "Google (via Coursera)",
-      year: "2024",
-    },
-    {
-      name: "AWS Cloud Practitioner Essentials",
-      issuer: "Amazon Web Services",
-      year: "2025",
-    },
-    {
-      name: "Dicoding - Menjadi Front-End Web Developer Expert",
-      issuer: "Dicoding Indonesia",
-      year: "2024",
+      name: "Introduction to Laravel for Beginners",
+      issuer: "HMDTI Universitas Dian Nuswantoro",
+      year: "2023",
     },
   ],
 
