@@ -49,7 +49,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full scroll-smooth antialiased`}>
+    <html
+      lang="en"
+      className={`${inter.variable} h-full scroll-smooth antialiased`}
+    >
       <body className="min-h-full flex flex-col">
         <LocaleProvider>{children}</LocaleProvider>
       </body>

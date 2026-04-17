@@ -10,8 +10,7 @@ const { socialLinks } = portfolioData;
 
 const navLinks = [
   { id: "projects", label: { id: "Proyek", en: "Projects" } },
-  { id: "profile", label: { id: "Profil", en: "Profile" } },
-  { id: "experience", label: { id: "Pengalaman", en: "Experience" } },
+{ id: "experience", label: { id: "Pengalaman", en: "Experience" } },
   { id: "education", label: { id: "Pendidikan", en: "Education" } },
   { id: "contact", label: { id: "Kontak", en: "Contact" } },
 ] as const;
