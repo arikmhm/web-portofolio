@@ -32,7 +32,14 @@ export const portfolioData: PortfolioData = {
     },
     tools: {
       label: { id: "Tools & Platform", en: "Tools & Platforms" },
-      items: ["Git & GitHub", "VS Code", "Figma", "Docker", "Vercel", "Postman"],
+      items: [
+        "Git & GitHub",
+        "VS Code",
+        "Figma",
+        "Docker",
+        "Vercel",
+        "Postman",
+      ],
     },
     databases: {
       label: { id: "Database", en: "Databases" },
@@ -47,7 +54,14 @@ export const portfolioData: PortfolioData = {
         id: "Sistem Informasi Pengelolaan Sampah Tugu — ekosistem aplikasi terintegrasi untuk digitalisasi bank sampah kelurahan. Mencakup mobile app petugas, admin dashboard, dan portal nasabah.",
         en: "Waste Bank Management Information System — an integrated app ecosystem for digitalizing kelurahan-level waste banks. Includes an officer mobile app, admin dashboard, and customer portal.",
       },
-      techStack: ["Flutter", "Next.js", "Node.js", "Express", "PostgreSQL", "Supabase"],
+      techStack: [
+        "Flutter",
+        "Next.js",
+        "Node.js",
+        "Express",
+        "PostgreSQL",
+        "Supabase",
+      ],
       notionUrl: "https://www.notion.so/33d30101bd8980b1a093d7a2765d2223",
       demoUrl: "",
       githubUrl: "",
@@ -59,7 +73,13 @@ export const portfolioData: PortfolioData = {
         id: "Platform digital yang membantu UMKM Indonesia menembus pasar ekspor global. Fitur utama: web builder untuk membuat toko digital profesional siap ekspor dalam hitungan menit.",
         en: "A digital platform helping Indonesian SMEs break into global export markets. Key feature: a web builder to create professional export-ready digital stores in minutes.",
       },
-      techStack: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma"],
+      techStack: [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "PostgreSQL",
+        "Prisma",
+      ],
       notionUrl: "https://www.notion.so/33d30101bd898082b7adf74580559d1c",
       demoUrl: "https://exantara.com",
       githubUrl: "",
@@ -133,7 +153,7 @@ export const portfolioData: PortfolioData = {
         id: "Ketua Divisi IT - Himpunan Mahasiswa Sistem Informasi",
         en: "Head of IT Division - Information Systems Student Association",
       },
-      company: "Universitas Diponegoro",
+      company: "Universitas Dian Nuswantoro",
       period: "Agustus 2023 - Juli 2024",
       description: {
         id: "Memimpin tim 8 orang dalam pengembangan website organisasi dan sistem registrasi event. Mengadakan workshop coding untuk 100+ mahasiswa.",
@@ -143,11 +163,11 @@ export const portfolioData: PortfolioData = {
   ],
 
   education: {
-    university: "Universitas Diponegoro",
+    university: "Universitas Dian Nuswantoro",
     major: "Sistem Informasi",
     degree: "S.Kom (Sarjana Komputer)",
     year: "2022 - 2026",
-    gpa: "3.72 / 4.00",
+    gpa: "3.93 / 4.00",
   },
 
   certifications: [
