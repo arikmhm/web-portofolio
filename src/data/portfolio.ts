@@ -65,7 +65,7 @@ export const portfolioData: PortfolioData = {
       notionUrl: "https://www.notion.so/33d30101bd8980b1a093d7a2765d2223",
       demoUrl: "",
       githubUrl: "",
-      thumbnail: "/images/projects/sipsatu.png",
+      thumbnail: "/images/projects/sipsatu.jpeg",
     },
     {
       title: "Exantara",
