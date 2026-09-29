@@ -84,7 +84,6 @@ const approach = document.querySelector('.solution');
 const approachTrack = approach.querySelector('.approach-track');
 const approachPin = approach.querySelector('.approach-pin');
 const stages = [...approach.querySelectorAll('.stage')];
-const stageCount = approach.querySelector('.approach-count');
 const pinnable = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:640px)');
 const TRANSITION = .6; // share of each step's scroll spent moving; the rest holds still
 const END = stages.length - 1 + .4; // linger on the last step before releasing the page
@@ -111,8 +110,6 @@ function renderApproach() {
     stage.style.setProperty('--fold', fold.toFixed(4));
     stage.style.setProperty('--fold-fr', `${(1 - fold).toFixed(4)}fr`);
   });
-  approach.style.setProperty('--progress', clamp01(stageCurrent / (stages.length - 1)).toFixed(4));
-  stageCount.textContent = String(Math.min(stages.length, Math.max(1, Math.round(stageCurrent) + 1))).padStart(2, '0');
   stageFrame = stageCurrent === stageTarget ? 0 : requestAnimationFrame(renderApproach);
 }
 
