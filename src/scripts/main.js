@@ -123,3 +123,63 @@ window.addEventListener('scroll', () => { if (pinnable.matches) readApproach(); 
 window.addEventListener('resize', () => { if (pinnable.matches) readApproach(); });
 pinnable.addEventListener('change', setupApproach);
 setupApproach();
+
+// Hero: strike out the decoy words, then settle on the highlighted "right".
+const heroTitle = document.querySelector('#hero-title');
+const heroSwap = heroTitle.querySelector('.hero-swap');
+const swapWords = [...heroSwap.children];
+const answer = swapWords.at(-1);
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+let swapWidths = [];
+
+function fitHeroSwap() {
+  // If the widest word would push "solution." onto its own line, keep it there for every word so the heading never reflows mid-loop.
+  const width = heroSwap.style.width;
+  heroSwap.style.transition = 'none';
+  heroTitle.classList.remove('is-stacked');
+  const heights = swapWidths.map(em => { heroSwap.style.width = `${em}em`; return heroTitle.offsetHeight; });
+  heroTitle.classList.toggle('is-stacked', Math.max(...heights) > heights.at(-1));
+  heroSwap.style.width = width;
+  heroSwap.offsetWidth;
+  heroSwap.style.transition = '';
+}
+
+function showWord(word, animate = true) {
+  // Reset an exited word below the line without animating, then bring it in.
+  word.style.transition = 'none';
+  word.classList.remove('is-out', 'is-struck', 'is-marked');
+  word.offsetWidth;
+  word.style.transition = animate ? '' : 'none';
+  heroSwap.style.width = `${swapWidths[swapWords.indexOf(word)]}em`;
+  word.classList.add('is-in');
+}
+
+async function runHeroSwap() {
+  heroSwap.classList.add('is-live');
+  const fontSize = parseFloat(getComputedStyle(heroSwap).fontSize);
+  swapWidths = swapWords.map(word => word.offsetWidth / fontSize);
+  fitHeroSwap();
+  window.addEventListener('resize', fitHeroSwap);
+  heroSwap.style.transition = 'none';
+  showWord(answer, false);
+  answer.classList.add('is-marked');
+  heroSwap.offsetWidth;
+  heroSwap.style.transition = answer.style.transition = '';
+  for (;;) {
+    await wait(4800);
+    answer.classList.remove('is-marked');
+    await wait(600);
+    answer.classList.replace('is-in', 'is-out');
+    for (const word of swapWords.slice(0, -1)) {
+      showWord(word);
+      await wait(900);
+      word.classList.add('is-struck');
+      await wait(850);
+      word.classList.replace('is-in', 'is-out');
+    }
+    showWord(answer);
+    await wait(450);
+    answer.classList.add('is-marked');
+  }
+}
+if (matchMedia('(prefers-reduced-motion:no-preference)').matches) document.fonts.ready.then(runHeroSwap);

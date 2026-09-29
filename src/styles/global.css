@@ -275,3 +275,15 @@ h1 mark { color:var(--ink); background:linear-gradient(transparent 73%,var(--yel
  .stage-number { font-size:calc(32px - 17px * var(--fold)); }
  .solution-stages h3 { font-size:calc(24px - 7px * var(--fold)); }
 }
+
+/* Hero: decoy words are struck out before the heading settles on the highlighted "right". */
+.hero-swap > span { display:none; }
+.hero-swap.is-live { display:inline-grid; justify-items:start; transition:width .6s cubic-bezier(.65,0,.35,1); }
+.hero-swap.is-live > * { grid-area:1 / 1; display:inline-block; position:relative; white-space:nowrap; color:var(--ink); opacity:0; transform:translateY(.28em); transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1),background-size .7s cubic-bezier(.65,0,.35,1); }
+.hero-swap.is-live > .is-in { opacity:1; transform:none; }
+.hero-swap.is-live > .is-out { opacity:0; transform:translateY(-.28em); }
+.hero-swap > span::after { content:''; position:absolute; left:-.04em; right:-.04em; top:55%; height:.05em; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .5s cubic-bezier(.65,0,.35,1); }
+.hero-swap > .is-struck::after { transform:scaleX(1); }
+.hero-swap.is-live mark { background-size:0% 100%; background-repeat:no-repeat; }
+.hero-swap.is-live mark.is-marked { background-size:100% 100%; }
+h1.is-stacked em { display:block; }
