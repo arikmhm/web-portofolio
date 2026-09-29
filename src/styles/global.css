@@ -294,14 +294,15 @@ h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var
 .hero-swap.is-live mark.is-marked { background-size:100% 100%; }
 h1.is-stacked em { display:block; }
 
-/* Hero CTA: the arrow flies out and a copy flies in, on hover and once each time the heading settles. */
+/* Arrow swap for any link with .cta-arrow: the arrow flies out and a copy flies in on hover.
+   The hero CTA also plays it once each time the heading settles. */
 .hero-cta { display:inline-flex; align-items:center; gap:28px; margin-top:30px; padding:14px 19px; background:var(--ink); color:white; font-size:12px; font-weight:500; transition:background .2s; }
 .hero-cta:hover { background:#44463d; }
 .cta-arrow { display:grid; overflow:hidden; }
 .cta-arrow .arrow-icon { grid-area:1 / 1; transition:transform .45s cubic-bezier(.65,0,.35,1); }
 .cta-arrow .arrow-icon:last-child { transform:translate(-120%,120%); }
-.hero-cta:is(:hover,:focus-visible) .arrow-icon:first-child { transform:translate(120%,-120%); }
-.hero-cta:is(:hover,:focus-visible) .arrow-icon:last-child { transform:none; }
+a:is(:hover,:focus-visible) .cta-arrow .arrow-icon:first-child { transform:translate(120%,-120%); }
+a:is(:hover,:focus-visible) .cta-arrow .arrow-icon:last-child { transform:none; }
 .hero-cta.is-nudging .arrow-icon:first-child { animation:cta-out .7s cubic-bezier(.65,0,.35,1); }
 .hero-cta.is-nudging .arrow-icon:last-child { animation:cta-in .7s cubic-bezier(.65,0,.35,1); }
 @keyframes cta-out { 70%,100% { transform:translate(120%,-120%); } }
