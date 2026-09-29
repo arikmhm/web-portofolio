@@ -6,28 +6,35 @@ const stages = [
   { label: 'IF IT HELPS', title: 'Add intelligence where it helps.', text: 'Help people find or make sense of information, then check the results.', note: 'AI is an option, not a requirement.' },
   { label: 'THE RIGHT FIT', title: 'Make it fit real life.', text: 'Keep it clear to use, aligned with the workflow, and ready to improve.' },
 ];
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
-<section class="solution section" id="thinking" aria-labelledby="solution-title">
-  <div class="container">
-    <div class="solution-heading">
-      <div><span class="eyebrow">01 / APPROACH</span><h2 id="solution-title">From question<br>to <em>solution.</em></h2></div>
-      <p>A good solution starts with the situation around it.</p>
+<section class="solution" id="thinking" aria-labelledby="solution-title">
+  <div class="approach-track">
+    <div class="approach-pin">
+      <div class="container approach-grid">
+        <div class="approach-intro">
+          <span class="eyebrow">01 / APPROACH</span>
+          <h2 id="solution-title">From question<br>to <em>solution.</em></h2>
+          <p>A good solution starts with the situation around it.</p>
+          <div class="approach-progress" aria-hidden="true"><span class="approach-count">01</span><span class="approach-bar"></span><span>{pad(stages.length)}</span></div>
+          <p class="solution-return"><span aria-hidden="true">↶</span>Try it in practice. Learn what works. Bring that learning back to the problem.</p>
+        </div>
+        <ol class="solution-stages">
+          {stages.map((stage, i) => (
+            <li class="stage">
+              <div class="stage-card">
+                <span class="stage-number" aria-hidden="true">{pad(i + 1)}</span>
+                <div>
+                  <div class="stage-fold"><div><span class="stage-index"><span class="sr-only">Step {i + 1}: </span>{stage.label}</span></div></div>
+                  <h3>{stage.title}</h3>
+                  <div class="stage-fold"><div><p>{stage.text}</p>{stage.note && <span class="stage-note">{stage.note}</span>}</div></div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
-    <ol class="solution-stages">
-      {stages.map((stage, i) => (
-        <li class:list={['stage', { 'is-optional': stage.note }]} style={`--i:${i}`}>
-          <span class="stage-marker" aria-hidden="true"></span>
-          <span class="stage-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <div>
-            <span class="stage-index"><span class="sr-only">Step {i + 1}: </span>{stage.label}</span>
-            <h3>{stage.title}</h3>
-            <p>{stage.text}</p>
-            {stage.note && <span class="stage-note">{stage.note}</span>}
-          </div>
-        </li>
-      ))}
-    </ol>
-    <p class="solution-return"><span aria-hidden="true">↶</span>Try it in practice. Learn what works. Bring that learning back to the problem.</p>
   </div>
 </section>
