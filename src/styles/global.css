@@ -245,7 +245,8 @@ h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var
 .stage { --enter:1; --fold:0; display:grid; grid-template-rows:var(--enter-fr,1fr); }
 /* No padding or border on the grid item itself, so a closed row really reaches zero height. */
 .stage-card { --pad:calc(28px - 14px * var(--fold)); position:relative; min-height:0; display:grid; grid-template-columns:calc(64px - 32px * var(--fold)) minmax(0,1fr); gap:0 18px; opacity:var(--enter); transform:translateY(calc((1 - var(--enter)) * 40px)); }
-.stage-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:var(--line); }
+.stage-card::before,.stage:last-child .stage-card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:var(--line); }
+.stage:last-child .stage-card::after { top:auto; bottom:0; } /* closes the list under the last step */
 .stage-card > * { padding-block:var(--pad); }
 .stage-number { font:italic calc(42px - 25px * var(--fold))/1.15 Georgia,serif; letter-spacing:-1px; color:#73766c; }
 .stage-fold { display:grid; grid-template-rows:var(--fold-fr,1fr); opacity:calc(1 - var(--fold) * 1.5); }
