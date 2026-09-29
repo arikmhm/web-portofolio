@@ -200,7 +200,8 @@ h2 em { color:#73766c; }
 }
 @media (prefers-reduced-motion:reduce) { .tech-track { animation:none; } .tech-marquee { overflow-x:auto; } .tech-group[aria-hidden] { display:none; } }
 
-h1 mark { color:var(--ink); background:linear-gradient(transparent 73%,var(--yellow) 73%,var(--yellow) 90%,transparent 90%); padding-inline:.025em; }
+/* Full block highlight, like selected text; inline-block keeps it within the line box. */
+h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var(--yellow),var(--yellow)); padding-inline:.06em; }
 .tech-marquee:hover .tech-track,.tech-marquee:focus-within .tech-track { animation-play-state:paused; }
 .tech-group li:hover img,.tech-group li:focus img { filter:grayscale(0); opacity:1; }
 .tech-group li:focus-visible { outline:1px solid var(--muted); outline-offset:8px; }
