@@ -10,7 +10,7 @@ Preview: http://127.0.0.1:4173/. Through Next.js: `/studio/index.html`.
 
 ## Content
 
-English-only solution-focused branding: introduction, problem-to-solution illustration, working principles, a single-row technology marquee, categorized portfolio, experience, and contact. Warm neutral colors with small yellow accents. Native menu, category filters, and email copy. Reduced-motion preferences are respected.
+English-only solution-focused branding: introduction, five-step approach, working principles, a single-row technology marquee, categorized portfolio, experience, and contact. Warm neutral colors with small yellow accents. Native menu, category filters, and email copy. Reduced-motion preferences are respected.
 
 Experience entries are adapted from `src/data/portfolio.ts`: MKP internship and Universitas Dian Nuswantoro laboratory assistant. No roles or dates are invented.
 
@@ -28,6 +28,6 @@ The page works without JavaScript: all projects remain visible. Fonts use Google
 
 ## Motion and technology logos
 
-The problem-to-solution diagram is static. The compact logo row loops automatically, pauses on hover or keyboard focus, and restores color only on the individual hovered or focused logo. Reduced-motion preferences disable the loop and make the row manually scrollable. The duplicate group is hidden from assistive technology and has no keyboard stops.
+The compact logo row loops automatically, pauses on hover or keyboard focus, and restores color only on the individual hovered or focused logo. Reduced-motion preferences disable the loop and make the row manually scrollable. The duplicate group is hidden from assistive technology and has no keyboard stops.
 
 Local SVG logos in `images/tech/` come from Devicon v2.17.0 (https://github.com/devicons/devicon). Technologies match the existing portfolio data. No runtime icon dependency or external image request is needed.
