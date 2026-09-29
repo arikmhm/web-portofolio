@@ -1,3 +1,13 @@
+---
+const stages = [
+  { label: 'THE QUESTION', title: "What's getting in the way?", text: 'A slow process, scattered information, or work that takes too much effort.' },
+  { label: 'THE CONTEXT', title: 'Find the real need.', text: 'Map the people, rules, and constraints. Decide what needs to change.' },
+  { label: 'THE BUILD', title: 'Build the useful parts.', text: 'Bring the flow, interface, and data together in a working system.' },
+  { label: 'IF IT HELPS', title: 'Add intelligence where it helps.', text: 'Help people find or make sense of information, then check the results.', note: 'AI is an option, not a requirement.' },
+  { label: 'THE RIGHT FIT', title: 'Make it fit real life.', text: 'Keep it clear to use, aligned with the workflow, and ready to improve.' },
+];
+---
+
 <section class="solution section" id="thinking" aria-labelledby="solution-title">
   <div class="container">
     <div class="solution-heading">
@@ -5,11 +15,18 @@
       <p>A good solution starts with the situation around it.</p>
     </div>
     <ol class="solution-stages">
-      <li><span class="stage-index">01 / THE QUESTION</span><div><h3>What's getting <br>in the way?</h3><p>A slow process, scattered information, or work that takes too much effort.</p></div></li>
-      <li><span class="stage-index">02 / THE CONTEXT</span><div><h3>Find the <br>real need.</h3><p>Map the people, rules, and constraints. Decide what needs to change.</p></div></li>
-      <li><span class="stage-index">03 / THE BUILD</span><div><h3>Build the <br>useful parts.</h3><p>Bring the flow, interface, and data together in a working system.</p></div></li>
-      <li><span class="stage-index">04 / IF IT HELPS</span><div><h3>Add intelligence <br>where it helps.</h3><p>Help people find or make sense of information, then check the results.</p><span class="stage-note">AI is an option, not a requirement.</span></div></li>
-      <li><span class="stage-index">05 / THE RIGHT FIT</span><div><h3>Make it fit <br>real life.</h3><p>Keep it clear to use, aligned with the workflow, and ready to improve.</p></div></li>
+      {stages.map((stage, i) => (
+        <li class:list={['stage', { 'is-optional': stage.note }]} style={`--i:${i}`}>
+          <span class="stage-marker" aria-hidden="true"></span>
+          <span class="stage-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <span class="stage-index"><span class="sr-only">Step {i + 1}: </span>{stage.label}</span>
+            <h3>{stage.title}</h3>
+            <p>{stage.text}</p>
+            {stage.note && <span class="stage-note">{stage.note}</span>}
+          </div>
+        </li>
+      ))}
     </ol>
     <p class="solution-return"><span aria-hidden="true">↶</span>Try it in practice. Learn what works. Bring that learning back to the problem.</p>
   </div>

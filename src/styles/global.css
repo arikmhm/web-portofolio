@@ -191,41 +191,15 @@ h2 em { color:#73766c; }
 .solution-heading { display:flex; justify-content:space-between; align-items:end; gap:50px; margin-bottom:52px; }
 .solution-heading h2 { margin-top:22px; font-size:clamp(52px,6vw,80px); }
 .solution-heading > p { max-width:265px; padding-bottom:8px; font-size:14px; }
-/* SVG edges share the same joints, so assembled pieces fit without overlaps. */
-.solution-stages { position:relative; list-style:none; display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); padding:30px 0; margin:0; isolation:isolate; }
-.solution-stages li { --piece:#f3f4ed; position:relative; grid-column:span 2; min-height:270px; padding:30px 34px 36px; display:flex; flex-direction:column; justify-content:space-between; gap:32px; background:var(--piece); border:1px solid var(--line); transform-origin:center; }
-.solution-stages li:nth-child(2),.solution-stages li:nth-child(4) { --piece:#e9ebe2; }
-.solution-stages li:nth-child(n+4) { grid-column:span 3; min-height:260px; }
-.solution-stages li:last-child { --piece:#e2e6db; }
-.puzzle-ready li { border:0; background:transparent; transform:translate(calc(var(--apart,0) * var(--drift-x)),calc(var(--apart,0) * var(--drift-y))) rotate(calc(var(--apart,0) * var(--drift-angle))); }
-.puzzle-ready li:nth-child(1) { --drift-x:-34px; --drift-y:-20px; --drift-angle:-3deg; }
-.puzzle-ready li:nth-child(2) { --drift-x:0px; --drift-y:-38px; --drift-angle:2deg; }
-.puzzle-ready li:nth-child(3) { --drift-x:34px; --drift-y:-18px; --drift-angle:3deg; }
-.puzzle-ready li:nth-child(4) { --drift-x:-26px; --drift-y:32px; --drift-angle:2deg; }
-.puzzle-ready li:nth-child(5) { --drift-x:28px; --drift-y:32px; --drift-angle:-2deg; }
-.puzzle-shape { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:-1; }
-.puzzle-shape path { fill:var(--piece); stroke:#bdc4b5; stroke-width:1; stroke-linejoin:round; }
-.solution { overflow:clip; }
-.stage-index { font:9px/1.6 var(--mono); color:var(--muted); }
-.solution-stages h3 { font-size:clamp(23px,2.5vw,30px); line-height:1.2; letter-spacing:-.8px; }
-.solution-stages p { max-width:320px; font-size:12px; line-height:1.75; margin-top:12px; }
-.stage-note { display:block; margin-top:11px; font:9px/1.6 var(--mono); color:var(--muted); }
-.solution-return { display:flex; align-items:baseline; gap:17px; margin-top:25px; font-size:12px; }
-.solution-return span { font-size:24px; line-height:1; color:var(--ink); }
 .tech-stack { padding-block:0 35px; }
 .tech-marquee { overflow:hidden; border-block:1px solid var(--line); mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent); }
 .tech-track { display:flex; width:max-content; animation:tech-loop 22s linear infinite; }
 .tech-group { display:flex; align-items:center; gap:64px; flex-shrink:0; list-style:none; padding:17px 32px; margin:0; }
 .tech-group img { display:block; width:29px; height:29px; object-fit:contain; filter:grayscale(1); opacity:.42; transition:filter .25s,opacity .25s; }
 @keyframes tech-loop { to { transform:translateX(-50%); } }
-@media (max-width:1000px) { .solution-stages li { padding-inline:19px; } }
 @media (max-width:760px) {
  .solution-heading { align-items:start; }
  .solution-heading > p { max-width:200px; }
- .solution-stages { grid-template-columns:1fr; padding:20px 0; }
- .solution-stages li,.solution-stages li:nth-child(n+4) { grid-column:1; min-height:200px; padding:30px 26px 38px; }
- .puzzle-ready li:nth-child(n) { --drift-x:14px; --drift-y:45px; --drift-angle:2deg; }
- .puzzle-ready li:nth-child(even) { --drift-x:-14px; --drift-angle:-2deg; }
  .tech-group { gap:48px; padding-inline:24px; }
  .tech-group img { width:26px; height:26px; }
 }
@@ -239,10 +213,6 @@ h1 mark { color:var(--ink); background:linear-gradient(transparent 73%,var(--yel
  .solution-heading { display:block; margin-bottom:34px; }
  .solution-heading h2 { font-size:clamp(46px,11vw,60px); }
  .solution-heading > p { max-width:300px; margin-top:22px; padding:0; }
- .solution-stages li,.solution-stages li:nth-child(n+4),.solution-stages li:last-child { grid-column:1; min-height:0; padding:28px 24px 38px; gap:24px; }
- .solution-stages h3 { font-size:25px; }
- .solution-stages h3 br { display:none; }
- .solution-return { align-items:flex-start; margin-top:20px; }
 }
 
 .solution { background:#eeefe7; --line:#d5d8cc; }
@@ -276,4 +246,58 @@ h1 mark { color:var(--ink); background:linear-gradient(transparent 73%,var(--yel
  .panel-close { width:44px; height:44px; }
 }
 
-@media (prefers-reduced-motion:reduce) { .puzzle-ready li { transform:none; } }
+/* Approach: a five-step track that fills as it scrolls into view, with a loop back to the start. */
+.solution-stages { --track:6px; position:relative; list-style:none; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); padding:0; margin:0; view-timeline:--approach; }
+.solution-stages::before,.solution-stages::after { content:''; position:absolute; top:var(--track); left:0; right:0; height:1px; background:var(--line); }
+.solution-stages::after { background:var(--ink); transform-origin:left; }
+.stage { position:relative; padding:44px 30px 0 0; }
+.stage-marker { position:absolute; top:0; left:0; width:13px; height:13px; border-radius:50%; border:1px solid var(--ink); background:var(--ink); z-index:1; }
+.is-optional .stage-marker { background:#eeefe7; border-style:dashed; }
+.stage:last-child .stage-marker { background:var(--yellow); border-color:var(--ink); }
+.stage-number { display:block; font:italic 44px/1 Georgia,serif; letter-spacing:-1.5px; color:#73766c; }
+.stage-index { display:block; margin-top:28px; font:9px/1.6 var(--mono); color:var(--muted); letter-spacing:.6px; }
+.solution-stages h3 { margin-top:14px; font-size:clamp(21px,2vw,26px); line-height:1.2; letter-spacing:-.7px; }
+.solution-stages p { max-width:260px; margin-top:14px; font-size:12px; line-height:1.75; }
+.stage-note { display:inline-block; margin-top:16px; padding:5px 8px; border:1px dashed #b3b8aa; font:9px/1.5 var(--mono); color:var(--muted); }
+.solution-return { position:relative; margin-top:44px; padding:40px 0 0 34px; font-size:12px; }
+.solution-return::before { content:''; position:absolute; top:0; left:6px; width:80%; height:22px; border:1px solid #9da393; border-top:0; }
+.solution-return::after { content:''; position:absolute; top:-1px; left:3px; width:7px; height:7px; border:solid #9da393; border-width:1px 0 0 1px; transform:rotate(45deg); }
+.solution-return span { display:none; }
+@supports (animation-timeline:view()) {
+ @media (prefers-reduced-motion:no-preference) {
+  .solution-stages::after { animation:track-fill-x linear both; animation-timeline:--approach; animation-range:cover 15vh cover 60vh; }
+  .stage-marker { animation:marker-on linear both; animation-timeline:--approach; animation-range:cover calc(15vh + var(--i) * 9vh) cover calc(15.5vh + var(--i) * 9vh); }
+ }
+}
+@keyframes track-fill-x { from { transform:scaleX(0); } }
+@keyframes track-fill-y { from { transform:scaleY(0); } }
+@keyframes marker-on { from { background:#eeefe7; border-color:#9da393; } }
+@media (max-width:1000px) {
+ .solution-stages { grid-template-columns:1fr; padding-left:52px; }
+ .solution-stages::before,.solution-stages::after { top:0; bottom:0; left:var(--track); right:auto; width:1px; height:auto; }
+ .solution-stages::after { transform-origin:top; }
+ .stage { display:grid; grid-template-columns:120px minmax(0,1fr); gap:20px; padding:0 0 56px; }
+ .stage:last-child { padding-bottom:0; }
+ .stage-marker { left:-52px; top:4px; }
+ .stage-number { font-size:40px; }
+ .stage-index { margin-top:0; }
+ .solution-stages p { max-width:440px; }
+ .solution-return { display:flex; align-items:baseline; gap:17px; margin-top:44px; padding:0; }
+ .solution-return::before,.solution-return::after { display:none; }
+ .solution-return span { display:inline; font-size:24px; line-height:1; color:var(--ink); }
+ @supports (animation-timeline:view()) {
+  @media (prefers-reduced-motion:no-preference) {
+   .solution-stages::after { animation-name:track-fill-y; animation-range:cover 50vh cover calc(100% - 50vh); }
+   .stage-marker { animation-timeline:view(); animation-range:cover 50vh cover calc(50vh + 1px); }
+  }
+ }
+}
+@media (max-width:600px) {
+ .solution-stages { padding-left:36px; }
+ .stage { display:block; padding-bottom:48px; }
+ .stage-marker { left:-36px; top:2px; }
+ .stage-number { font-size:34px; }
+ .stage-index { margin-top:18px; }
+ .solution-stages h3 { font-size:25px; }
+ .solution-return { align-items:flex-start; margin-top:36px; }
+}
