@@ -143,6 +143,7 @@ h2 em { color:#73766c; }
  .project-caption p { font-size:12px; }
  .about { grid-template-columns:1fr; gap:40px; }
  .about-body { padding-top:0; }
+ .about h2 { font-size:clamp(32px,10.5vw,43px); } /* keeps each line of the heading on one line down to 320px */
  .contact { padding:28px 24px 35px; }
  .contact-main { margin-top:25px; }
  .contact h2 { font-size:72px; }
