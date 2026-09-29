@@ -62,50 +62,72 @@ techCopy.setAttribute('aria-hidden', 'true');
 techCopy.querySelectorAll('[tabindex]').forEach((item) => item.removeAttribute('tabindex'));
 techGroup.after(techCopy);
 
-// Approach: while pinned, each step opens in turn, then folds to its title as the next arrives.
-const approach = document.querySelector('.solution');
-const approachTrack = approach.querySelector('.approach-track');
-const approachPin = approach.querySelector('.approach-pin');
-const stages = [...approach.querySelectorAll('.stage')];
+// Pinned stacks (Approach, Work): while pinned, each item opens in turn, then folds to its title as the next arrives.
 const pinnable = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:545px)');
-const TRANSITION = .6; // share of each step's scroll spent moving; the rest holds still
-const END = stages.length + .2; // the last step folds too, then all titles hold briefly before releasing the page
+const TRANSITION = .6; // share of each item's scroll spent moving; the rest holds still
 const ease = x => x * x * (3 - 2 * x);
 const clamp01 = x => Math.min(1, Math.max(0, x));
-let stageTarget = 0, stageCurrent = 0, stageFrame = 0;
-approach.style.setProperty('--steps', END);
 
-function readApproach() {
-  const stepLength = (approachTrack.offsetHeight - approachPin.offsetHeight) / END;
-  stageTarget = -approachTrack.getBoundingClientRect().top / stepLength;
-  if (!stageFrame) stageFrame = requestAnimationFrame(renderApproach);
-}
+function pinnedStack(section, track, pin, items, list) {
+  let end = items.length + .2; // the last item folds too, then all titles hold briefly before releasing the page
+  let target = 0, current = 0, frame = 0;
+  section.style.setProperty('--steps', end);
 
-function renderApproach() {
-  // Follow the scroll position with easing rather than snapping to it.
-  stageCurrent += (stageTarget - stageCurrent) * .12;
-  if (Math.abs(stageTarget - stageCurrent) < .0005) stageCurrent = stageTarget;
-  stages.forEach((stage, i) => {
-    const enter = ease(clamp01((stageCurrent - i) / TRANSITION + 1));
-    const fold = ease(clamp01((stageCurrent - i - 1) / TRANSITION + 1));
-    stage.style.setProperty('--enter', enter.toFixed(4));
-    stage.style.setProperty('--enter-fr', `${enter.toFixed(4)}fr`);
-    stage.style.setProperty('--fold', fold.toFixed(4));
-    stage.style.setProperty('--fold-fr', `${(1 - fold).toFixed(4)}fr`);
+  // With a list, the next section scrolls up under the folded titles instead of leaving the rest of the frame empty:
+  // the track is shortened by that spare space, and the final hold lasts long enough to cover it.
+  function fitRelease() {
+    items.forEach(item => { item.style.cssText = '--enter:1;--enter-fr:1fr;--fold:1;--fold-fr:0fr'; });
+    const spare = Math.max(0, pin.offsetHeight - (list.getBoundingClientRect().bottom - pin.getBoundingClientRect().top) - 48);
+    end = items.length + Math.max(.2, spare / (pin.offsetHeight * .6)); // one item's scroll is 60% of the frame
+    section.style.setProperty('--steps', end);
+    track.style.marginBottom = `${-spare}px`;
+  }
+
+  function read() {
+    const stepLength = (track.offsetHeight - pin.offsetHeight) / end;
+    target = -track.getBoundingClientRect().top / stepLength;
+    if (!frame) frame = requestAnimationFrame(render);
+  }
+
+  function render() {
+    // Follow the scroll position with easing rather than snapping to it.
+    current += (target - current) * .12;
+    if (Math.abs(target - current) < .0005) current = target;
+    items.forEach((item, i) => {
+      const enter = i ? ease(clamp01((current - i) / TRANSITION + 1)) : 1; // the first item is already there as the section arrives
+      const fold = ease(clamp01((current - i - 1) / TRANSITION + 1));
+      item.style.setProperty('--enter', enter.toFixed(4));
+      item.style.setProperty('--enter-fr', `${enter.toFixed(4)}fr`);
+      item.style.setProperty('--fold', fold.toFixed(4));
+      item.style.setProperty('--fold-fr', `${(1 - fold).toFixed(4)}fr`);
+    });
+    frame = current === target ? 0 : requestAnimationFrame(render);
+  }
+
+  function setup() {
+    section.classList.toggle('is-pinned', pinnable.matches);
+    if (!pinnable.matches) {
+      track.style.marginBottom = '';
+      return items.forEach(item => item.removeAttribute('style'));
+    }
+    if (list) fitRelease();
+    read();
+    current = target;
+  }
+  window.addEventListener('scroll', () => { if (pinnable.matches) read(); }, { passive:true });
+  window.addEventListener('resize', () => {
+    if (!pinnable.matches) return;
+    if (list) fitRelease(); // render() restores the item styles on the next frame
+    read();
   });
-  stageFrame = stageCurrent === stageTarget ? 0 : requestAnimationFrame(renderApproach);
+  pinnable.addEventListener('change', setup);
+  setup();
 }
 
-function setupApproach() {
-  approach.classList.toggle('is-pinned', pinnable.matches);
-  if (!pinnable.matches) return stages.forEach(stage => stage.removeAttribute('style'));
-  readApproach();
-  stageCurrent = stageTarget;
-}
-window.addEventListener('scroll', () => { if (pinnable.matches) readApproach(); }, { passive:true });
-window.addEventListener('resize', () => { if (pinnable.matches) readApproach(); });
-pinnable.addEventListener('change', setupApproach);
-setupApproach();
+const approach = document.querySelector('.solution');
+pinnedStack(approach, approach.querySelector('.approach-track'), approach.querySelector('.approach-pin'), [...approach.querySelectorAll('.stage')]);
+const work = document.querySelector('.portfolio');
+pinnedStack(work, work.querySelector('.pin-track'), work.querySelector('.pin-frame'), [...work.querySelectorAll('.pin-item')], work.querySelector('.project-list'));
 
 // Hero: strike out the decoy words, then settle on the highlighted "right".
 const heroTitle = document.querySelector('#hero-title');

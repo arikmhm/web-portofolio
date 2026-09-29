@@ -44,29 +44,55 @@ h2 em { color:#73766c; }
 .section-heading { display:flex; justify-content:space-between; gap:50px; align-items:flex-end; margin-bottom:43px; }
 .section-heading h2,.about h2 { margin-top:22px; }
 .section-heading > p { max-width:305px; font-size:14px; }
-/* Portfolio: one row per project, media left and details right. Screenshots sit on a neutral panel,
-   grey at rest and in colour on hover (hover devices only), like the technology logos. */
-.project-list { border-bottom:1px solid var(--line); }
-.project { display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:56px; align-items:center; padding-block:40px; border-top:1px solid var(--line); }
-.project-media { position:relative; display:grid; place-items:center; aspect-ratio:16 / 10; overflow:hidden; background:#e6e8e0; }
-.project-media img { display:block; width:84%; height:auto; box-shadow:0 14px 34px rgb(34 35 32 / 14%); transition:filter .5s,transform .6s cubic-bezier(.22,1,.36,1); }
+/* Portfolio: each project has a title row and a body (media + details). Static list by default; with .is-pinned
+   the list holds while each project opens, then folds to its title row, like Approach. */
+.project { --enter:1; --fold:0; display:grid; grid-template-rows:var(--enter-fr,1fr); }
+.project-card { --pad:calc(26px - 12px * var(--fold)); position:relative; min-height:0; opacity:var(--enter); transform:translateY(calc((1 - var(--enter)) * 40px)); }
+.project-card::before,.project:last-child .project-card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:var(--line); }
+.project:last-child .project-card::after { top:auto; bottom:0; }
+.project-head { display:grid; grid-template-columns:200px minmax(0,1fr); align-items:baseline; gap:18px; padding-block:var(--pad); }
+.project-head h3 { font-size:calc(32px - 13px * var(--fold)); line-height:1.2; letter-spacing:-.8px; color:color-mix(in srgb,#73766c calc(var(--fold) * 100%),var(--ink)); }
+.project-fold { display:grid; grid-template-rows:var(--fold-fr,1fr); opacity:calc(1 - var(--fold) * 1.5); }
+.project-fold > div { min-height:0; overflow:hidden; }
+.project-body { display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:56px; align-items:center; padding-bottom:34px; }
+/* Screenshots sit on a neutral panel, grey at rest and in colour on hover (hover devices only), like the technology logos. */
+.project-media { --media-h:auto; position:relative; display:grid; place-items:center; aspect-ratio:16 / 10; height:var(--media-h); overflow:hidden; background:#e6e8e0; }
+.project-media img { display:block; width:auto; height:auto; max-width:84%; max-height:80%; box-shadow:0 14px 34px rgb(34 35 32 / 14%); transition:filter .5s,transform .6s cubic-bezier(.22,1,.36,1); }
 .project:hover .project-media img { transform:translateY(-6px); }
-.is-pair img { position:absolute; width:70%; }
-.is-pair img:first-child { right:7%; bottom:11%; z-index:1; }
-.is-pair img:last-child { left:7%; top:11%; }
+.is-pair img { position:absolute; max-width:68%; max-height:64%; }
+.is-pair img:first-child { right:7%; bottom:10%; z-index:1; }
+.is-pair img:last-child { left:7%; top:10%; }
 .project:hover .is-pair img:first-child { transform:translate(8px,4px); }
 .project:hover .is-pair img:last-child { transform:translate(-8px,-4px); }
 @media (hover:hover) { .project-media img { filter:grayscale(1); } .project:hover .project-media img { filter:none; } }
 .is-stat { background:#30342e; }
-.project-stat { display:flex; flex-direction:column; align-items:center; gap:14px; font:10px/1.6 var(--mono); letter-spacing:.6px; text-transform:uppercase; color:#b6bcae; }
-.project-stat span { font:italic clamp(56px,7vw,100px)/1 Georgia,serif; letter-spacing:-.04em; text-transform:none; color:var(--paper); }
-.project-info h3 { margin-top:16px; font-size:clamp(24px,2.4vw,32px); line-height:1.2; letter-spacing:-.8px; }
-.project-info p { max-width:440px; margin-top:14px; font-size:13px; line-height:1.8; }
-.project-tech { display:flex; flex-wrap:wrap; gap:6px; margin:20px 0 0; padding:0; list-style:none; }
+.project-stat { display:flex; flex-direction:column; align-items:center; gap:12px; font:10px/1.6 var(--mono); letter-spacing:.6px; text-transform:uppercase; color:#b6bcae; }
+.project-stat span { font:italic clamp(48px,6.5vw,96px)/1 Georgia,serif; letter-spacing:-.04em; text-transform:none; color:var(--paper); }
+.project-info p { max-width:440px; font-size:13px; line-height:1.8; }
+.project-tech { display:flex; flex-wrap:wrap; gap:6px; margin:18px 0 0; padding:0; list-style:none; }
 .project-tech li { padding:4px 8px; border:1px solid var(--line); font:9px/1.5 var(--mono); letter-spacing:.4px; color:var(--muted); }
-.project-link { display:inline-flex; align-items:center; gap:14px; margin-top:24px; padding-bottom:6px; border-bottom:1px solid var(--ink); font-size:12px; font-weight:500; }
-@media (max-width:1000px) { .project { gap:36px; } }
-@media (max-width:760px) { .project { grid-template-columns:1fr; gap:24px; padding-block:32px; } }
+.project-link { display:inline-flex; align-items:center; gap:14px; margin-top:22px; padding-bottom:6px; border-bottom:1px solid var(--ink); font-size:12px; font-weight:500; }
+/* Pinned: the heading scrolls away normally and only the list holds. The track is pulled up by the frame's
+   top padding so the first project sits where the static list would. Media height follows the viewport so
+   four title rows and one open project always fit. */
+.portfolio.is-pinned .pin-track { --pin-top:clamp(80px,12vh,120px); margin-top:calc(-1 * var(--pin-top)); height:calc(100vh + var(--steps) * 60vh); height:calc(100svh + var(--steps) * 60svh); }
+.portfolio.is-pinned .pin-frame { position:sticky; top:0; height:100vh; height:100svh; padding-top:var(--pin-top); overflow:hidden; }
+.portfolio.is-pinned .project-media { aspect-ratio:auto; --media-h:clamp(180px,calc(100vh - 430px),380px); --media-h:clamp(180px,calc(100svh - 430px),380px); }
+@media (max-width:1000px) { .project-body { gap:36px; } .project-head { grid-template-columns:160px minmax(0,1fr); } }
+@media (max-width:760px) {
+ .project-head { grid-template-columns:1fr; gap:6px; }
+ .project-head h3 { font-size:calc(26px - 9px * var(--fold)); }
+ .project-body { grid-template-columns:1fr; gap:20px; padding-bottom:28px; }
+ /* Pinned on phones: number only, so titles get the full width and stay on fewer lines. */
+ .portfolio.is-pinned .project-head { grid-template-columns:26px minmax(0,1fr); gap:10px; }
+ .portfolio.is-pinned .project-category { display:none; }
+ .portfolio.is-pinned .project-head h3 { font-size:calc(24px - 7px * var(--fold)); }
+ .portfolio.is-pinned .project-card { --pad:calc(20px - 8px * var(--fold)); }
+ .portfolio.is-pinned .pin-track { --pin-top:64px; }
+ .portfolio.is-pinned .project-media { --media-h:clamp(110px,calc(100vh - 450px),230px); --media-h:clamp(110px,calc(100svh - 450px),230px); }
+ .portfolio.is-pinned .project-body { gap:14px; padding-bottom:18px; }
+ .portfolio.is-pinned .project-tech { display:none; }
+}
 .about { display:grid; grid-template-columns:1fr 1fr; gap:120px; align-items:start; }
 /* Editorial split: heading left, lead paragraph and supporting text right, top-aligned with the heading. */
 .about-body { max-width:520px; padding-top:47px; }

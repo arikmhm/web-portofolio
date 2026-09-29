@@ -46,24 +46,36 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
 <section class="portfolio section container" id="work" aria-labelledby="work-title">
   <div class="section-heading"><div><span class="eyebrow">03 / PORTFOLIO</span><h2 id="work-title">A closer look<br>at the <em>work.</em></h2></div><p>Different problems, different approaches. A closer look at the context, the decisions, and what came out of them.</p></div>
-  <div class="project-list">
-    {projects.map((project, i) => (
-      <article class="project">
-        <div class:list={['project-media', { 'is-stat': project.stat, 'is-pair': project.images?.length === 2 }]}>
-          {project.stat ? (
-            <p class="project-stat"><span>{project.stat.value}</span>{project.stat.label}</p>
-          ) : (
-            project.images!.map((image) => <Image src={image.src} alt={image.alt} widths={[640, 960, 1440]} sizes="(max-width: 760px) 100vw, 58vw" />)
-          )}
-        </div>
-        <div class="project-info">
-          <span class="eyebrow">{pad(i + 1)} / {project.category}</span>
-          <h3>{project.title}</h3>
-          <p>{project.summary}</p>
-          <ul class="project-tech" aria-label="Built with">{project.tech.map((name) => <li>{name}</li>)}</ul>
-          {project.link && <a class="project-link" href={project.link.href} target="_blank" rel="noopener">{project.link.label} <span class="cta-arrow" aria-hidden="true"><Arrow /><Arrow /></span></a>}
-        </div>
-      </article>
-    ))}
+  <div class="pin-track">
+    <div class="pin-frame">
+      <div class="project-list">
+        {projects.map((project, i) => (
+          <article class="project pin-item">
+            <div class="project-card">
+              <div class="project-head">
+                <span class="eyebrow">{pad(i + 1)}<span class="project-category"> / {project.category}</span></span>
+                <h3>{project.title}</h3>
+              </div>
+              <div class="project-fold"><div>
+                <div class="project-body">
+                  <div class:list={['project-media', { 'is-stat': project.stat, 'is-pair': project.images?.length === 2 }]}>
+                    {project.stat ? (
+                      <p class="project-stat"><span>{project.stat.value}</span>{project.stat.label}</p>
+                    ) : (
+                      project.images!.map((image) => <Image src={image.src} alt={image.alt} widths={[640, 960, 1440]} sizes="(max-width: 760px) 100vw, 58vw" />)
+                    )}
+                  </div>
+                  <div class="project-info">
+                    <p>{project.summary}</p>
+                    <ul class="project-tech" aria-label="Built with">{project.tech.map((name) => <li>{name}</li>)}</ul>
+                    {project.link && <a class="project-link" href={project.link.href} target="_blank" rel="noopener">{project.link.label} <span class="cta-arrow" aria-hidden="true"><Arrow /><Arrow /></span></a>}
+                  </div>
+                </div>
+              </div></div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
   </div>
 </section>
