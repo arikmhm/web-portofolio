@@ -86,7 +86,7 @@ const approachPin = approach.querySelector('.approach-pin');
 const stages = [...approach.querySelectorAll('.stage')];
 const pinnable = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:545px)');
 const TRANSITION = .6; // share of each step's scroll spent moving; the rest holds still
-const END = stages.length - 1 + .4; // linger on the last step before releasing the page
+const END = stages.length + .2; // the last step folds too, then all titles hold briefly before releasing the page
 const ease = x => x * x * (3 - 2 * x);
 const clamp01 = x => Math.min(1, Math.max(0, x));
 let stageTarget = 0, stageCurrent = 0, stageFrame = 0;
@@ -104,7 +104,7 @@ function renderApproach() {
   if (Math.abs(stageTarget - stageCurrent) < .0005) stageCurrent = stageTarget;
   stages.forEach((stage, i) => {
     const enter = ease(clamp01((stageCurrent - i) / TRANSITION + 1));
-    const fold = i < stages.length - 1 ? ease(clamp01((stageCurrent - i - 1) / TRANSITION + 1)) : 0;
+    const fold = ease(clamp01((stageCurrent - i - 1) / TRANSITION + 1));
     stage.style.setProperty('--enter', enter.toFixed(4));
     stage.style.setProperty('--enter-fr', `${enter.toFixed(4)}fr`);
     stage.style.setProperty('--fold', fold.toFixed(4));

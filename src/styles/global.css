@@ -69,7 +69,7 @@ h2 em { color:#73766c; }
 .project-caption h3 { font-size:21px; letter-spacing:-.5px; line-height:1.4; }
 .project-caption p { font-size:12px; margin-top:5px; }
 .project-status { font:9px/2 var(--mono); color:var(--muted); white-space:nowrap; padding-top:5px; }
-.about { display:grid; grid-template-columns:1fr 1fr; gap:120px; align-items:start; border-top:1px solid var(--line); }
+.about { display:grid; grid-template-columns:1fr 1fr; gap:120px; align-items:start; }
 /* Editorial split: heading left, lead paragraph and supporting text right, top-aligned with the heading. */
 .about-body { max-width:520px; padding-top:47px; }
 .about-body p { font-size:14px; line-height:1.85; }
