@@ -85,7 +85,7 @@ const approachTrack = approach.querySelector('.approach-track');
 const approachPin = approach.querySelector('.approach-pin');
 const stages = [...approach.querySelectorAll('.stage')];
 const stageCount = approach.querySelector('.approach-count');
-const pinnable = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:560px)');
+const pinnable = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:640px)');
 const TRANSITION = .6; // share of each step's scroll spent moving; the rest holds still
 const END = stages.length - 1 + .4; // linger on the last step before releasing the page
 const ease = x => x * x * (3 - 2 * x);

@@ -240,11 +240,13 @@ h1 mark { color:var(--ink); background:linear-gradient(transparent 73%,var(--yel
 
 /* Approach: static list by default; with .is-pinned (set by script) the section holds while each step opens, then folds to its title. */
 .approach-pin { padding-block:110px; }
-.approach-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:40px 90px; align-items:start; }
+.approach-grid { display:grid; gap:52px; }
+.approach-intro { display:flex; justify-content:space-between; align-items:end; gap:50px; }
 .approach-intro h2 { margin-top:22px; font-size:clamp(52px,5.4vw,76px); }
-.approach-intro > p:not(.solution-return) { max-width:300px; margin-top:26px; font-size:14px; }
+.approach-aside { width:300px; padding-bottom:8px; }
+.approach-aside > p:not(.solution-return) { font-size:14px; }
 .approach-progress { display:none; }
-.solution-return { display:flex; align-items:baseline; gap:14px; max-width:300px; margin-top:34px; font-size:12px; }
+.solution-return { display:flex; align-items:baseline; gap:14px; margin-top:22px; font-size:12px; }
 .solution-return span { font-size:22px; line-height:1; color:var(--ink); }
 .solution-stages { list-style:none; margin:0; padding:0; }
 .stage { --enter:1; --fold:0; display:grid; grid-template-rows:var(--enter-fr,1fr); }
@@ -260,17 +262,19 @@ h1 mark { color:var(--ink); background:linear-gradient(transparent 73%,var(--yel
 .solution-stages p { max-width:440px; padding-top:12px; font-size:13px; line-height:1.75; }
 .stage-note { display:inline-block; margin-top:14px; padding:5px 8px; border:1px dashed #b3b8aa; font:9px/1.5 var(--mono); color:var(--muted); }
 .is-pinned .approach-track { height:calc(100svh + var(--steps) * 60svh); }
-.is-pinned .approach-pin { position:sticky; top:0; height:100svh; padding-block:clamp(90px,16svh,150px) 40px; overflow:hidden; }
-.is-pinned .approach-progress { display:flex; align-items:center; gap:14px; max-width:300px; margin-top:40px; font:10px var(--mono); color:var(--muted); }
+.is-pinned .approach-pin { position:sticky; top:0; height:100svh; padding-block:clamp(80px,12svh,130px) 40px; overflow:hidden; }
+.is-pinned .approach-progress { display:flex; align-items:center; gap:14px; margin-top:22px; font:10px var(--mono); color:var(--muted); }
 .approach-count { color:var(--ink); }
 .approach-bar { position:relative; flex:1; height:1px; background:var(--line); }
 .approach-bar::after { content:''; position:absolute; inset:0; background:var(--ink); transform:scaleX(var(--progress,0)); transform-origin:left; }
 @media (max-width:760px) {
  .approach-pin { padding-block:75px; }
- .approach-grid { grid-template-columns:1fr; gap:34px; }
+ .approach-grid { gap:34px; }
+ .approach-intro { display:block; }
  .approach-intro h2 { font-size:clamp(46px,11vw,60px); }
+ .approach-aside { width:auto; max-width:300px; margin-top:22px; padding:0; }
  .is-pinned .approach-pin { padding-top:84px; }
- .is-pinned .approach-intro > p { display:none; }
+ .is-pinned .approach-aside > p { display:none; }
  .is-pinned .approach-progress { margin-top:22px; }
 }
 @media (max-width:600px) {
