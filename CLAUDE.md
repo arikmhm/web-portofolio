@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-Personal portfolio website for a fresh graduate Software Engineer (Sistem Informasi). Single-page, scroll-based, bilingual (ID/EN), minimalist monochrome design. Targets recruiters, hiring managers, and potential clients.
+Personal portfolio website for a fresh graduate Software Engineer (Sistem Informasi). Single-page, scroll-based, English-only site that reproduces the "studio" design in `public/studio/`. Targets recruiters, hiring managers, and potential clients.
 
 ## Notion Data Sources
 
@@ -16,115 +16,59 @@ All content is sourced from Notion. Edit data in Notion, then rebuild/update the
   - WarungKu: `33c30101-bd89-81fe-87de-ff3974800ff3`
   - DevBlog: `33c30101-bd89-81ec-8fa0-eaee3f564e2e`
 
-## Design Specifications
+## Stack
 
-### Style
-- **Approach**: Ultra minimal, clean, monochrome
-- **Colors**: Black, gray, white only — no colored accents
-- **Theme**: Light background (white/off-white base)
-- **Typography**: Inter — bold & high contrast for headings, light/regular for body. Large font size in hero for premium feel
-- **Whitespace**: Generous and intentional
-
-### Layout
-- Single page, scroll-based
-- Fixed navbar with smooth scroll
-- Mobile-first responsive
-
-### Border Radius
-- **Sharp (0px)**: Navbar, section containers, project cards — precise, engineered feel
-- **Slightly rounded (4-6px)**: Buttons, tech stack tags, badges — clickable and friendly
-- **Never**: Full rounded / pill-shaped
-
-### Animations
-- Subtle only: fade-in / slide-up on scroll via Intersection Observer
-- Smooth hover transitions on cards and links
-- No heavy animations, parallax, or effects that hurt readability
-
-### Bilingual
-- Toggle switch in navbar (ID/EN)
-- All content available in both languages
-
-## Tech Stack
-
-- **Framework**: Next.js (App Router) + TypeScript
-- **Styling**: Tailwind CSS
-- **Font**: Inter (via `next/font/google`)
-- **Animations**: CSS transitions + Intersection Observer API
+- **Framework**: Astro (static output), TypeScript strict
+- **Package manager**: pnpm — never npm/yarn
+- **Styling**: plain CSS in `src/styles/global.css` — no Tailwind
+- **Script**: vanilla JS in `src/scripts/main.js`, loaded from `Layout.astro`
+- **Fonts**: DM Sans + IBM Plex Mono (Google Fonts, imported in CSS), Georgia for `<em>`
 - **Deployment**: Vercel
-- **Version Control**: Git + GitHub
 
-## Folder Structure
+## Design Reference — `public/studio/`
+
+`public/studio/` (HTML/CSS/JS "studio" concept) is the **source of truth for the design**. The Astro site must render identically to it.
+
+- **Never delete or modify `public/studio/`** unless explicitly asked.
+- Design changes: agree whether to change the reference first, then mirror into Astro.
+- Verify parity by serving both (`.claude/launch.json` has `astro` on 4321 and `studio` on 4173) and comparing layout at desktop and mobile widths.
+
+Design summary: English-only, warm neutral palette (`--paper #f7f7f2`, `--ink #222320`) with small yellow accents (`--yellow #e3c83d`), large editorial headings with serif italic `<em>`, respects `prefers-reduced-motion`.
+
+## Structure
 
 ```
 src/
-  app/          # Next.js App Router pages and layouts
-  components/   # Reusable UI components
-  data/         # Static data files (portfolio content)
-  lib/          # Utility functions (i18n, helpers)
-  types/        # TypeScript type definitions
+  pages/index.astro     # assembles sections
+  layouts/Layout.astro  # head, SVG icon sprite, global CSS + script
+  components/           # Header, Hero, Approach, About, TechStack, Work, Experience, Contact, Footer, Arrow
+  styles/global.css     # copied from public/studio/styles.css
+  scripts/main.js       # copied from public/studio/script.js
 public/
-  images/
-    projects/   # Project thumbnails/screenshots
-  files/        # CV PDF and other downloadable files
+  images/tech/          # Devicon SVG logos
+  images/projects/      # project screenshots
+  studio/               # design reference (do not delete)
 ```
-
-## Code Conventions
-
-- TypeScript strict mode
-- Functional components only
-- Tailwind CSS for all styling — no CSS modules or styled-components
-- `Bilingual` type (`{ id: string; en: string }`) for all translatable content
-- `Locale` type (`"id" | "en"`) for language switching
-- All types defined in `src/types/portfolio.ts`
-- Component files: PascalCase (e.g., `HeroSection.tsx`)
-- Utility files: camelCase (e.g., `useLocale.ts`)
-- Semantic HTML with proper heading hierarchy
-- Alt text on all images
 
 ## Page Sections (in order)
 
-1. **Hero** — Name, tagline, CTA buttons (Download CV, Contact Me)
-2. **About** — Short bio (3-5 sentences)
-3. **Tech Stack** — Grid/icon display by category
-4. **Projects** — Card grid (2-3 cols desktop), click → Notion case study page
-5. **Experience** — Timeline/list (internship, freelance, org)
-6. **Education & Certifications** — Degree info + cert list
-7. **Contact** — Social links + contact form/mailto
-8. **Footer** — Copyright + social icons
+1. **Header** — wordmark, nav, dialog menu (appears as floating button after scroll)
+2. **Hero** — "Real problems. The right solution."
+3. **Approach** — five puzzle-piece stages (SVG shapes drawn by script)
+4. **About** — intro + three working principles
+5. **Tech Stack** — looping logo marquee
+6. **Work** — portfolio grid with category filters (`web`, `system`, `ai`)
+7. **Experience** — role list
+8. **Contact** — mailto + copy email
+9. **Footer**
 
-## Functional Requirements (Priority)
+## Code Conventions
 
-### Must Have
-- FR-01: Bilingual toggle (ID/EN) in navbar
-- FR-02: Smooth scroll navigation
-- FR-03: Responsive design (mobile, tablet, desktop)
-- FR-06: Download CV button (PDF)
-- FR-07: Contact form / mailto integration
-- FR-08: External links to GitHub & LinkedIn
-
-### Should Have
-- FR-04: Scroll-based fade-in animation
-- FR-05: Project card hover interaction
-- FR-09: SEO meta tags & Open Graph
-- FR-10: Fast loading (Lighthouse > 90)
-
-## Development Phases
-
-Work must be done phase-by-phase. Do not skip or combine phases.
-
-- **Phase 1**: Project setup, CLAUDE.md, Next.js init, Tailwind, Inter font, folder structure, TS types ← CURRENT
-- **Phase 2**: Git repo, .gitignore, README, push to GitHub
-- **Phase 3**: Data layer — static data files from Notion content, bilingual utility, types
-- **Phase 4**: Layout & navigation — navbar (fixed, smooth scroll, language toggle, mobile hamburger) + footer
-- **Phase 5**: Build sections one by one (5a–5g), each with its own commit
-- **Phase 6**: Animations & polish (Intersection Observer scroll animations, hover effects)
-- **Phase 7**: SEO & branding (favicon, OG image via next/og, meta tags)
-- **Phase 8**: Testing & QA (responsive, bilingual, links, Lighthouse > 90)
-- **Phase 9**: Deploy to Vercel
+- Keep markup and class names identical to the reference so `global.css` and `main.js` keep working unchanged.
+- Content lists live as arrays in component frontmatter (`TechStack`, `Work`, `Experience`).
+- Component files: PascalCase. Semantic HTML, alt text on all images.
 
 ## Data Notes
 
-- All current data in Notion is **dummy** — will be replaced with real data later
-- CV PDF, professional photo, and project screenshots are not yet available
-- Project cards link to Notion pages as primary destination; demo/GitHub links are optional
-- Each project MUST have a Notion case study page
+- Experience entries come from real data (MKP internship, UDINUS lab assistant). Do not invent roles or dates.
+- Portfolio cards are placeholders until real screenshots are added (see `public/studio/README.md`).

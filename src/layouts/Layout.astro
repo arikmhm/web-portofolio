@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Arik MHM — Finding the right fit.',
+  description = 'Arik MHM — turning everyday challenges into well-considered solutions through systems thinking, software, and practical AI.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="description" content={description}>
+  <title>{title}</title>
+</head>
+<body>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="arrow-compact" viewBox="0 0 24 24">
+      <path d="M5 5H19V19M19 5 7 17" />
+    </symbol>
+  </svg>
+  <slot />
+  <script>
+    import '../scripts/main.js';
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+---
+// Logo files live in public/images/tech/ (Devicon v2.17.0).
+const tech = [
+  { file: 'typescript', name: 'TypeScript' },
+  { file: 'javascript', name: 'JavaScript' },
+  { file: 'react', name: 'React' },
+  { file: 'nextjs', name: 'Next.js' },
+  { file: 'laravel', name: 'Laravel' },
+  { file: 'python', name: 'Python' },
+  { file: 'postgresql', name: 'PostgreSQL' },
+  { file: 'docker', name: 'Docker' },
+];
+---
+
+<section class="tech-stack container" aria-label="Technologies I work with">
+  <div class="tech-marquee" tabindex="0" aria-label="Technology logos. Hover or focus a logo to pause the row and reveal its color."><div class="tech-track"><ul class="tech-group">
+    {tech.map(({ file, name }) => (
+      <li tabindex="0"><img src={`/images/tech/${file}.svg`} alt={name} title={name} width="48" height="48"></li>
+    ))}
+  </ul></div></div>
+</section>

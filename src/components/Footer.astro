@@ -1,0 +1,11 @@
+---
+import Arrow from './Arrow.astro';
+---
+
+<footer class="site-footer container">
+  <div class="footer-inner">
+    <div class="footer-identity"><a class="wordmark" href="#" aria-label="Arik MHM, home">arikmhm<span aria-hidden="true">.</span></a><p>Thoughtful solutions. Built with care.</p></div>
+    <nav class="footer-nav" aria-label="Footer navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#experience">Experience</a><a href="#contact">Contact</a><a href="https://linkedin.com/in/arikmhm">LinkedIn <Arrow /></a><a href="https://github.com/arikmhm">GitHub <Arrow /></a></nav>
+    <span class="footer-copyright">© <span id="year">{new Date().getFullYear()}</span></span>
+  </div>
+</footer>

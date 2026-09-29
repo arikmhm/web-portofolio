@@ -1,33 +1,39 @@
-# Web Portfolio — Muhammad Ariyanto
+# Web Portfolio — Muhammad Ariyanto (arikmhm)
 
-Personal portfolio website built with Next.js, TypeScript, and Tailwind CSS.
+Personal website built with [Astro](https://astro.build). Plain CSS and vanilla JavaScript, no UI framework.
 
-## Tech Stack
-
-- **Framework**: Next.js (App Router) + TypeScript
-- **Styling**: Tailwind CSS
-- **Font**: Inter
-- **Deployment**: Vercel
-
-## Getting Started
+## Getting started
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev        # http://localhost:4321
+pnpm build      # static output in dist/
+pnpm preview
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
-
-## Project Structure
+## Structure
 
 ```
 src/
-  app/          # Pages and layouts
-  components/   # UI components
-  data/         # Portfolio content data
-  lib/          # Utilities
-  types/        # TypeScript definitions
+  pages/index.astro     # page: assembles the sections
+  layouts/Layout.astro  # <head>, icon sprite, global CSS + script
+  components/           # one component per section (Header, Hero, Approach, ...)
+  styles/global.css     # all styling
+  scripts/main.js       # menu, filters, email copy, logo marquee, puzzle
 public/
-  images/       # Project screenshots
-  files/        # Downloadable files (CV, etc.)
+  images/tech/          # technology logos (Devicon v2.17.0)
+  images/projects/      # project screenshots
+  studio/               # original static HTML/CSS/JS design — the reference
 ```
+
+Editable content lists (tech logos, projects, experience) sit at the top of `TechStack.astro`, `Work.astro`, and `Experience.astro`.
+
+## Design reference
+
+`public/studio/` is the original static version the Astro site reproduces. Keep it; compare against it when changing the design:
+
+```bash
+python3 -m http.server 4173 --bind 127.0.0.1 --directory public/studio
+```
+
+It is also served by the Astro build at `/studio/`.

@@ -1,0 +1,15 @@
+---
+const experience = [
+  { date: 'AUG 2025 — FEB 2026', role: 'Backend Developer Intern', company: 'PT Mitra Kasih Perkasa (MKP)', description: "Built ticket validation features for one of the company's main products, working with Go and PostgreSQL.", type: 'ENGINEERING' },
+  { date: 'JUN 2024 — FEB 2025', role: 'Laboratory Assistant', company: 'Universitas Dian Nuswantoro', description: 'Helped over 60 students learn the foundations of web programming through practical guidance, troubleshooting, and assignment feedback.', type: 'TEACHING' },
+];
+---
+
+<section class="experience section container" id="experience" aria-labelledby="experience-title">
+  <div class="section-heading"><div><span class="eyebrow">04 / EXPERIENCE</span><h2 id="experience-title">Along <em>the way.</em></h2></div><p>The roles, teams, and collaborations that have shaped how I work.</p></div>
+  <div class="experience-list">
+    {experience.map((item) => (
+      <article class="experience-row"><div class="experience-date">{item.date}</div><div><h3>{item.role}</h3><span class="experience-company">{item.company}</span><p>{item.description}</p></div><span class="experience-type">{item.type}</span></article>
+    ))}
+  </div>
+</section>
