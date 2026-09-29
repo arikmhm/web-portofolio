@@ -1,22 +1,69 @@
 ---
-// category must be `web`, `system`, or `ai` to match the filter buttons.
+import { Image } from 'astro:assets';
+import Arrow from './Arrow.astro';
+import sipsatu from '../assets/projects/sipsatu.jpeg';
+import exantara from '../assets/projects/exantara.png';
+import sensasi2024 from '../assets/projects/sensasi2024.png';
+import sensasi2025 from '../assets/projects/sensasi2025.png';
+
+// Each project shows screenshots, or a key figure when there is nothing to screenshot.
 const projects = [
-  { category: 'web', label: 'WEB & APPLICATIONS', title: 'Web & applications', description: 'Interfaces built around the people using them.' },
-  { category: 'system', label: 'INTERNAL TOOLS', title: 'Internal tools', description: 'Making everyday work a little easier.' },
-  { category: 'ai', label: 'AI & INTEGRATIONS', title: 'AI & integrations', description: 'Connecting information, tools, and useful intelligence.' },
+  {
+    title: 'SIPSATU',
+    category: 'INTERNAL TOOLS',
+    summary: 'A waste bank management system for Kelurahan Tugurejo, with a mobile app for officers, an admin dashboard, and a customer portal.',
+    tech: ['Flutter', 'Next.js', 'Express', 'PostgreSQL', 'Supabase'],
+    images: [{ src: sipsatu, alt: 'SIPSATU mobile app screens for recording waste purchases and customer transactions' }],
+  },
+  {
+    title: 'Exantara',
+    category: 'WEB & APPS',
+    summary: 'A platform that helps Indonesian small businesses reach export markets, with a web builder for export-ready online stores.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Prisma'],
+    images: [{ src: exantara, alt: 'Exantara landing page with the headline “One Platform To Go Global” over a container port' }],
+    link: { href: 'https://exantara.com', label: 'Visit site' },
+  },
+  {
+    title: 'LaporGub complaint classification',
+    category: 'AI & RESEARCH',
+    summary: 'Thesis research on automatically classifying public complaints on LaporGub, Central Java’s e-government platform, with XLM-RoBERTa and class weighting. Published in JAIC (Sinta 3).',
+    tech: ['Python', 'XLM-RoBERTa', 'Hugging Face', 'scikit-learn'],
+    stat: { value: '53,877', label: 'public complaints, 18 categories' },
+  },
+  {
+    title: 'SENSASI 2024 & 2025',
+    category: 'WEB & APPS',
+    summary: 'Websites for the National Information Systems Seminar: event details, speakers, tickets, and registration. The 2025 edition added a call for papers.',
+    tech: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS'],
+    images: [
+      { src: sensasi2025, alt: 'SENSASI 2025 seminar website homepage' },
+      { src: sensasi2024, alt: 'SENSASI 2024 seminar website homepage' },
+    ],
+  },
 ];
 const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
 <section class="portfolio section container" id="work" aria-labelledby="work-title">
   <div class="section-heading"><div><span class="eyebrow">03 / PORTFOLIO</span><h2 id="work-title">A closer look<br>at the <em>work.</em></h2></div><p>Different problems, different approaches. A closer look at the context, the decisions, and what came out of them.</p></div>
-  <div class="portfolio-filters" role="group" aria-label="Filter work by category" hidden><button type="button" data-filter="all" aria-pressed="true">All work <span>{pad(projects.length)}</span></button><button type="button" data-filter="web" aria-pressed="false">Web &amp; apps</button><button type="button" data-filter="system" aria-pressed="false">Internal tools</button><button type="button" data-filter="ai" aria-pressed="false">AI &amp; integrations</button></div>
-  <div class="portfolio-grid">
+  <div class="project-list">
     {projects.map((project, i) => (
-      <article class="project" data-category={project.category}>
-        <div class={`project-preview preview-${project.category}`}><div class="preview-top"><span>{pad(i + 1)}</span><span>PROJECT PREVIEW</span></div><div class="screenshot-slot"><span class="frame-corner" aria-hidden="true"></span><span>Room for the real thing.</span><small>Project screenshots coming soon</small></div><span class="preview-bottom">{project.label}</span></div>
-        <div class="project-caption"><div><h3>{project.title}</h3><p>{project.description}</p></div><span class="project-status">Coming soon</span></div>
+      <article class="project">
+        <div class:list={['project-media', { 'is-stat': project.stat, 'is-pair': project.images?.length === 2 }]}>
+          {project.stat ? (
+            <p class="project-stat"><span>{project.stat.value}</span>{project.stat.label}</p>
+          ) : (
+            project.images!.map((image) => <Image src={image.src} alt={image.alt} widths={[640, 960, 1440]} sizes="(max-width: 760px) 100vw, 58vw" />)
+          )}
+        </div>
+        <div class="project-info">
+          <span class="eyebrow">{pad(i + 1)} / {project.category}</span>
+          <h3>{project.title}</h3>
+          <p>{project.summary}</p>
+          <ul class="project-tech" aria-label="Built with">{project.tech.map((name) => <li>{name}</li>)}</ul>
+          {project.link && <a class="project-link" href={project.link.href} target="_blank" rel="noopener">{project.link.label} <span class="cta-arrow" aria-hidden="true"><Arrow /><Arrow /></span></a>}
+        </div>
       </article>
     ))}
-  </div><span class="portfolio-count sr-only" role="status">{projects.length} project previews shown</span>
+  </div>
 </section>

@@ -44,31 +44,29 @@ h2 em { color:#73766c; }
 .section-heading { display:flex; justify-content:space-between; gap:50px; align-items:flex-end; margin-bottom:43px; }
 .section-heading h2,.about h2 { margin-top:22px; }
 .section-heading > p { max-width:305px; font-size:14px; }
-.portfolio-filters { display:flex; flex-wrap:wrap; gap:29px; margin-bottom:30px; }
-.portfolio-filters button { padding:9px 0; background:none; border:0; border-bottom:2px solid transparent; color:var(--muted); font-size:12px; }
-.portfolio-filters button[aria-pressed='true'] { color:var(--ink); border-bottom-color:var(--yellow); }
-.portfolio-filters button span { font:9px var(--mono); margin-left:9px; }
-.portfolio-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:44px 30px; }
-.project:first-child { grid-column:1 / -1; }
-.project-preview { position:relative; aspect-ratio:1.55; padding:25px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; background:#e6e8e0; }
-.project:first-child .project-preview { aspect-ratio:2.35; }
-.preview-system { background:#e8e5df; }
-.preview-ai { background:#30342e; color:#e4e7dc; }
-.preview-top { display:flex; justify-content:space-between; font:9px var(--mono); opacity:.65; }
-.preview-bottom { font:8px var(--mono); letter-spacing:.5px; opacity:.6; }
-.screenshot-slot { width:78%; height:65%; margin:auto; border:1px solid #acb2a3; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; background:rgb(247 247 242 / 18%); }
-.project:first-child .screenshot-slot { width:68%; height:77%; }
-.screenshot-slot::before,.screenshot-slot::after { content:''; position:absolute; width:13px; height:13px; border:solid currentColor; opacity:.6; }
-.screenshot-slot::before { top:-1px; left:-1px; border-width:1px 0 0 1px; }
-.screenshot-slot::after { bottom:-1px; right:-1px; border-width:0 1px 1px 0; }
-.screenshot-slot > span { font:italic 26px Georgia,serif; letter-spacing:-.6px; }
-.screenshot-slot small { font-size:10px; margin-top:11px; opacity:.65; }
-.preview-ai .screenshot-slot { border-color:#69715f; background:transparent; }
-.project-preview > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-.project-caption { display:flex; justify-content:space-between; gap:20px; margin-top:19px; }
-.project-caption h3 { font-size:21px; letter-spacing:-.5px; line-height:1.4; }
-.project-caption p { font-size:12px; margin-top:5px; }
-.project-status { font:9px/2 var(--mono); color:var(--muted); white-space:nowrap; padding-top:5px; }
+/* Portfolio: one row per project, media left and details right. Screenshots sit on a neutral panel,
+   grey at rest and in colour on hover (hover devices only), like the technology logos. */
+.project-list { border-bottom:1px solid var(--line); }
+.project { display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:56px; align-items:center; padding-block:40px; border-top:1px solid var(--line); }
+.project-media { position:relative; display:grid; place-items:center; aspect-ratio:16 / 10; overflow:hidden; background:#e6e8e0; }
+.project-media img { display:block; width:84%; height:auto; box-shadow:0 14px 34px rgb(34 35 32 / 14%); transition:filter .5s,transform .6s cubic-bezier(.22,1,.36,1); }
+.project:hover .project-media img { transform:translateY(-6px); }
+.is-pair img { position:absolute; width:70%; }
+.is-pair img:first-child { right:7%; bottom:11%; z-index:1; }
+.is-pair img:last-child { left:7%; top:11%; }
+.project:hover .is-pair img:first-child { transform:translate(8px,4px); }
+.project:hover .is-pair img:last-child { transform:translate(-8px,-4px); }
+@media (hover:hover) { .project-media img { filter:grayscale(1); } .project:hover .project-media img { filter:none; } }
+.is-stat { background:#30342e; }
+.project-stat { display:flex; flex-direction:column; align-items:center; gap:14px; font:10px/1.6 var(--mono); letter-spacing:.6px; text-transform:uppercase; color:#b6bcae; }
+.project-stat span { font:italic clamp(56px,7vw,100px)/1 Georgia,serif; letter-spacing:-.04em; text-transform:none; color:var(--paper); }
+.project-info h3 { margin-top:16px; font-size:clamp(24px,2.4vw,32px); line-height:1.2; letter-spacing:-.8px; }
+.project-info p { max-width:440px; margin-top:14px; font-size:13px; line-height:1.8; }
+.project-tech { display:flex; flex-wrap:wrap; gap:6px; margin:20px 0 0; padding:0; list-style:none; }
+.project-tech li { padding:4px 8px; border:1px solid var(--line); font:9px/1.5 var(--mono); letter-spacing:.4px; color:var(--muted); }
+.project-link { display:inline-flex; align-items:center; gap:14px; margin-top:24px; padding-bottom:6px; border-bottom:1px solid var(--ink); font-size:12px; font-weight:500; }
+@media (max-width:1000px) { .project { gap:36px; } }
+@media (max-width:760px) { .project { grid-template-columns:1fr; gap:24px; padding-block:32px; } }
 .about { display:grid; grid-template-columns:1fr 1fr; gap:120px; align-items:start; }
 /* Editorial split: heading left, lead paragraph and supporting text right, top-aligned with the heading. */
 .about-body { max-width:520px; padding-top:47px; }
@@ -105,9 +103,6 @@ h2 em { color:#73766c; }
  .section { padding-block:75px; }
  .section-heading { gap:30px; }
  .section-heading > p { max-width:235px; font-size:13px; }
- .project-preview { padding:17px; }
- .screenshot-slot > span { font-size:20px; }
- .project-caption { flex-direction:column; gap:4px; }
  .about { gap:35px; }
  .contact-main { grid-template-columns:1fr; gap:25px; }
  .contact-main > div { max-width:420px; width:100%; }
@@ -131,16 +126,6 @@ h2 em { color:#73766c; }
  .section-heading > p { max-width:310px; }
  h2 { font-size:43px; }
  .section-heading h2,.about h2 { margin-top:17px; }
- .portfolio-filters { gap:4px 23px; margin-bottom:22px; }
- .portfolio-filters button { font-size:11px; }
- .portfolio-grid { grid-template-columns:1fr; gap:32px; }
- .project:first-child { grid-column:auto; }
- .project-preview,.project:first-child .project-preview { aspect-ratio:1.25; }
- .screenshot-slot,.project:first-child .screenshot-slot { width:85%; height:65%; }
- .screenshot-slot > span { font-size:22px; }
- .screenshot-slot small { font-size:9px; }
- .project-caption h3 { font-size:20px; }
- .project-caption p { font-size:12px; }
  .about { grid-template-columns:1fr; gap:40px; }
  .about-body { padding-top:0; }
  .about h2 { font-size:clamp(32px,10.5vw,43px); } /* keeps each line of the heading on one line down to 320px */

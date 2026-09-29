@@ -55,23 +55,6 @@ if (navigator.clipboard?.writeText) {
   });
 }
 
-const portfolioFilters = document.querySelector('.portfolio-filters');
-const projects = document.querySelectorAll('.project');
-portfolioFilters.hidden = false;
-portfolioFilters.addEventListener('click', (event) => {
-  const button = event.target.closest('button[data-filter]');
-  if (!button) return;
-  portfolioFilters.querySelectorAll('button').forEach((filter) => {
-    filter.setAttribute('aria-pressed', String(filter === button));
-  });
-  let count = 0;
-  projects.forEach((project) => {
-    project.hidden = button.dataset.filter !== 'all' && project.dataset.category !== button.dataset.filter;
-    if (!project.hidden) count++;
-  });
-  document.querySelector('.portfolio-count').textContent = `${count} project previews shown`;
-});
-
 // A second identical group makes the logo loop seamless, without extra announcements.
 const techGroup = document.querySelector('.tech-group');
 const techCopy = techGroup.cloneNode(true);
