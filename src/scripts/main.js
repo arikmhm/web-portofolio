@@ -84,7 +84,7 @@ const approach = document.querySelector('.solution');
 const approachTrack = approach.querySelector('.approach-track');
 const approachPin = approach.querySelector('.approach-pin');
 const stages = [...approach.querySelectorAll('.stage')];
-const pinnable = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:640px)');
+const pinnable = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:545px)');
 const TRANSITION = .6; // share of each step's scroll spent moving; the rest holds still
 const END = stages.length - 1 + .4; // linger on the last step before releasing the page
 const ease = x => x * x * (3 - 2 * x);
@@ -128,13 +128,13 @@ setupApproach();
 const heroTitle = document.querySelector('#hero-title');
 const heroSwap = heroTitle.querySelector('.hero-swap');
 const swapWords = [...heroSwap.children];
-const answer = swapWords.at(-1);
+const answer = swapWords[swapWords.length - 1];
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 let swapWidths = [];
 const heroCta = document.querySelector('.hero-cta');
 
 function nudgeCta() {
-  if (heroCta.matches(':hover, :focus-visible')) return;
+  if (heroCta.matches(':hover, :focus')) return;
   heroCta.classList.remove('is-nudging');
   heroCta.offsetWidth;
   heroCta.classList.add('is-nudging');
@@ -148,7 +148,7 @@ function fitHeroSwap() {
   heroSwap.style.transition = 'none';
   heroTitle.classList.remove('is-stacked');
   const heights = swapWidths.map(em => { heroSwap.style.width = `${em}em`; return heroTitle.offsetHeight; });
-  heroTitle.classList.toggle('is-stacked', Math.max(...heights) > heights.at(-1));
+  heroTitle.classList.toggle('is-stacked', Math.max(...heights) > heights[heights.length - 1]);
   heroSwap.style.width = width;
   heroSwap.offsetWidth;
   heroSwap.style.transition = '';

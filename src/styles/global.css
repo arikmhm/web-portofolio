@@ -259,8 +259,9 @@ h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var
 .solution-stages h3 { font-size:calc(30px - 11px * var(--fold)); line-height:1.2; letter-spacing:-.7px; color:color-mix(in srgb,#73766c calc(var(--fold) * 100%),var(--ink)); }
 .solution-stages p { max-width:440px; padding-top:12px; font-size:13px; line-height:1.75; }
 .stage-note { display:inline-block; margin-top:14px; padding:5px 8px; border:1px dashed #b3b8aa; font:9px/1.5 var(--mono); color:var(--muted); }
-.is-pinned .approach-track { height:calc(100svh + var(--steps) * 60svh); }
-.is-pinned .approach-pin { position:sticky; top:0; height:100svh; padding-block:clamp(80px,12svh,130px) 40px; overflow:hidden; }
+/* vh first for browsers without svh (Safari < 15.4). */
+.is-pinned .approach-track { height:calc(100vh + var(--steps) * 60vh); height:calc(100svh + var(--steps) * 60svh); }
+.is-pinned .approach-pin { position:sticky; top:0; height:100vh; height:100svh; padding-block:clamp(80px,12vh,130px) 40px; padding-block:clamp(80px,12svh,130px) 40px; overflow:hidden; }
 @media (max-width:760px) {
  .approach-pin { padding-block:75px; }
  .approach-grid { gap:34px; }
@@ -275,6 +276,14 @@ h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var
  .stage-card { --pad:calc(22px - 12px * var(--fold)); grid-template-columns:calc(46px - 18px * var(--fold)) minmax(0,1fr); gap:0 12px; }
  .stage-number { font-size:calc(32px - 17px * var(--fold)); }
  .solution-stages h3 { font-size:calc(24px - 7px * var(--fold)); }
+}
+/* Short phones (iPhone 8/SE with browser bars, ~550px tall): tighten the pinned layout so every step fits. */
+@media (max-width:760px) and (max-height:700px) {
+ .is-pinned .approach-pin { padding-top:72px; }
+ .is-pinned .approach-grid { gap:22px; }
+ .is-pinned .approach-intro h2 { margin-top:14px; font-size:38px; }
+ .is-pinned .stage-card { --pad:calc(16px - 9px * var(--fold)); }
+ .is-pinned .solution-stages h3 { font-size:calc(22px - 5px * var(--fold)); }
 }
 
 /* Hero: decoy words are struck out before the heading settles on the highlighted "right". */
