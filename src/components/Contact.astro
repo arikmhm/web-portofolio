@@ -4,5 +4,14 @@ import Arrow from './Arrow.astro';
 
 <section class="contact container" id="contact" aria-labelledby="contact-title">
   <div class="contact-top"><span class="eyebrow">HAVE SOMETHING IN MIND?</span><span class="eyebrow contact-status"><span class="contact-dot" aria-hidden="true"></span>OPEN TO NEW OPPORTUNITIES</span></div>
-  <div class="contact-main"><h2 id="contact-title">Let's <em>talk.</em></h2><div><p>Something that could work better?<br>Let's figure out a way forward.</p><a class="contact-link" href="mailto:mhm.ariyanto@gmail.com">mhm.ariyanto@gmail.com <Arrow /></a><div class="contact-meta"><button class="copy-email" type="button" data-email="mhm.ariyanto@gmail.com" hidden>Copy email</button><span class="contact-local" hidden>KUDUS, ID — <time></time> WIB</span></div><span class="copy-status" role="status"></span></div></div>
+  <div class="contact-main"><h2 id="contact-title">Let's <em>talk.</em></h2><div><p>Something that could work better?<br>Let's figure out a way forward.</p>
+    <form class="contact-form" action="/api/contact" method="post">
+      <label class="contact-field"><span>Name</span><input name="name" autocomplete="name" maxlength="100" required></label>
+      <label class="contact-field"><span>Email</span><input type="email" name="email" autocomplete="email" maxlength="200" required></label>
+      <label class="contact-field"><span>Message</span><textarea name="message" rows="3" maxlength="5000" required></textarea></label>
+      <input class="contact-trap" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="cta-button contact-send" type="submit">Send message <span class="cta-arrow" aria-hidden="true"><Arrow /><Arrow /></span></button>
+      <p class="form-status" role="status"></p>
+    </form>
+    <a class="contact-link" href="mailto:mhm.ariyanto@gmail.com">mhm.ariyanto@gmail.com <Arrow /></a><div class="contact-meta"><button class="copy-email" type="button" data-email="mhm.ariyanto@gmail.com" hidden>Copy email</button><span class="contact-local" hidden>KUDUS, ID — <time></time> WIB</span></div><span class="copy-status" role="status"></span></div></div>
 </section>

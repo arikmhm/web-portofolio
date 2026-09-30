@@ -55,6 +55,24 @@ if (navigator.clipboard?.writeText) {
   });
 }
 
+// Contact form: send without leaving the page (the form still posts on its own without JavaScript).
+const contactForm = document.querySelector('.contact-form');
+const formStatus = contactForm.querySelector('.form-status');
+const sendButton = contactForm.querySelector('.contact-send');
+contactForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  sendButton.disabled = true;
+  formStatus.textContent = 'Sending…';
+  try {
+    const response = await fetch(contactForm.action, { method:'POST', body:new FormData(contactForm), headers:{ Accept:'application/json' } });
+    formStatus.textContent = (await response.json()).message;
+    if (response.ok) contactForm.reset();
+  } catch {
+    formStatus.textContent = 'Your message could not be sent. Please email me directly.';
+  }
+  sendButton.disabled = false;
+});
+
 // Local time next to the email, so visitors in other time zones know when they'd reach me.
 const localTime = document.querySelector('.contact-local');
 const timeFormat = new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Jakarta', hour:'2-digit', minute:'2-digit' });
