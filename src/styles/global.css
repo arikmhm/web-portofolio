@@ -101,6 +101,8 @@ h2 em { color:#73766c; }
 }
 .about { display:grid; grid-template-columns:1fr 1fr; gap:120px; align-items:start; }
 /* Editorial split: heading left, lead paragraph and supporting text right, top-aligned with the heading. */
+/* Two columns so both "by"s line up, showing the parallel between the two lines. */
+.about-title { display:grid; grid-template-columns:auto 1fr; column-gap:.26em; }
 .about-body { max-width:520px; padding-top:47px; }
 .about-body p { font-size:14px; line-height:1.85; }
 .about-body p + p { margin-top:22px; }
@@ -127,6 +129,7 @@ h2 em { color:#73766c; }
  .contact-link { font-size:16px; }
 }
 @media (max-width:760px) {
+ .about h2 { font-size:min(38px,5.3vw); } /* keeps the aligned heading inside its narrow column */
  .container { width:calc(100% - 40px); }
  .header-inner { min-height:82px; }
  .edition { display:none; }
