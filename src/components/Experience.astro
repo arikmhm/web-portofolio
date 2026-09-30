@@ -7,9 +7,17 @@ const experience = [
 
 <section class="experience section container" id="experience" aria-labelledby="experience-title">
   <div class="section-heading"><div><span class="eyebrow">04 / EXPERIENCE</span><h2 id="experience-title">Along <em>the way.</em></h2></div><p>The roles, teams, and collaborations that have shaped how I work.</p></div>
-  <div class="experience-list">
-    {experience.map((item) => (
-      <article class="experience-row"><div class="experience-date">{item.date}</div><div><h3>{item.role}</h3><span class="experience-company">{item.company}</span><p>{item.description}</p></div><span class="experience-type">{item.type}</span></article>
-    ))}
+  <div class="pin-track">
+    <div class="pin-frame">
+      <div class="experience-list">
+        {experience.map((item) => (
+          <article class="experience-item pin-item">
+            <div class="experience-card">
+              <div class="experience-row"><div class="experience-date">{item.date}</div><div><h3>{item.role}</h3><span class="experience-company">{item.company}</span><div class="experience-fold"><div><p>{item.description}</p></div></div></div><span class="experience-type">{item.type}</span></div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
   </div>
 </section>

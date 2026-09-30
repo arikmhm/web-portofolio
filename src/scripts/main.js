@@ -62,7 +62,7 @@ techCopy.setAttribute('aria-hidden', 'true');
 techCopy.querySelectorAll('[tabindex]').forEach((item) => item.removeAttribute('tabindex'));
 techGroup.after(techCopy);
 
-// Pinned stacks (Approach, Work): while pinned, each item opens in turn, then folds to its title as the next arrives.
+// Pinned stacks (Approach, Work, Experience): while pinned, each item opens in turn, then folds to its title as the next arrives.
 const pinnable = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:545px)');
 const TRANSITION = .6; // share of each item's scroll spent moving; the rest holds still
 const ease = x => x * x * (3 - 2 * x);
@@ -77,7 +77,11 @@ function pinnedStack(section, track, pin, items, list) {
   // the track is shortened by that spare space, and the final hold lasts long enough to cover it.
   function fitRelease() {
     items.forEach(item => { item.style.cssText = '--enter:1;--enter-fr:1fr;--fold:1;--fold-fr:0fr'; });
-    const spare = Math.max(0, pin.offsetHeight - (list.getBoundingClientRect().bottom - pin.getBoundingClientRect().top) - 48);
+    track.style.marginBottom = '';
+    // Capped at the content left below the track: the track still counts toward the page height, so pulling up more
+    // than what follows would leave blank space after the footer.
+    const after = document.documentElement.scrollHeight - (track.getBoundingClientRect().bottom + scrollY);
+    const spare = Math.min(after, Math.max(0, pin.offsetHeight - (list.getBoundingClientRect().bottom - pin.getBoundingClientRect().top) - 48));
     end = items.length + Math.max(.2, spare / (pin.offsetHeight * .6)); // one item's scroll is 60% of the frame
     section.style.setProperty('--steps', end);
     track.style.marginBottom = `${-spare}px`;
@@ -128,6 +132,8 @@ const approach = document.querySelector('.solution');
 pinnedStack(approach, approach.querySelector('.approach-track'), approach.querySelector('.approach-pin'), [...approach.querySelectorAll('.stage')]);
 const work = document.querySelector('.portfolio');
 pinnedStack(work, work.querySelector('.pin-track'), work.querySelector('.pin-frame'), [...work.querySelectorAll('.pin-item')], work.querySelector('.project-list'));
+const experience = document.querySelector('.experience');
+pinnedStack(experience, experience.querySelector('.pin-track'), experience.querySelector('.pin-frame'), [...experience.querySelectorAll('.pin-item')], experience.querySelector('.experience-list'));
 
 // Hero: strike out the decoy words, then settle on the highlighted "right".
 const heroTitle = document.querySelector('#hero-title');

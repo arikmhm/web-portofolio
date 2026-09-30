@@ -81,8 +81,8 @@ h2 em { color:#73766c; }
 /* Pinned: the heading scrolls away normally and only the list holds. The track is pulled up by the frame's
    top padding so the first project sits where the static list would. Media height follows the viewport so
    four title rows and one open project always fit. */
-.portfolio.is-pinned .pin-track { --pin-top:clamp(80px,12vh,120px); margin-top:calc(-1 * var(--pin-top)); height:calc(100vh + var(--steps) * 60vh); height:calc(100svh + var(--steps) * 60svh); }
-.portfolio.is-pinned .pin-frame { position:sticky; top:0; height:100vh; height:100svh; padding-top:var(--pin-top); overflow:hidden; }
+.is-pinned .pin-track { --pin-top:clamp(80px,12vh,120px); margin-top:calc(-1 * var(--pin-top)); height:calc(100vh + var(--steps) * 60vh); height:calc(100svh + var(--steps) * 60svh); }
+.is-pinned .pin-frame { position:sticky; top:0; height:100vh; height:100svh; padding-top:var(--pin-top); overflow:hidden; }
 .portfolio.is-pinned .project-media { aspect-ratio:auto; --media-h:clamp(180px,calc(100vh - 430px),380px); --media-h:clamp(180px,calc(100svh - 430px),380px); }
 @media (max-width:1000px) { .project-body { gap:36px; } .project-head { grid-template-columns:160px minmax(0,1fr); } }
 @media (max-width:760px) {
@@ -94,7 +94,7 @@ h2 em { color:#73766c; }
  .portfolio.is-pinned .project-category { display:none; }
  .portfolio.is-pinned .project-head h3 { font-size:calc(24px - 7px * var(--fold)); }
  .portfolio.is-pinned .project-card { --pad:calc(20px - 8px * var(--fold)); }
- .portfolio.is-pinned .pin-track { --pin-top:64px; }
+ .is-pinned .pin-track { --pin-top:64px; }
  .portfolio.is-pinned .project-media { --media-h:clamp(110px,calc(100vh - 450px),230px); --media-h:clamp(110px,calc(100svh - 450px),230px); }
  .portfolio.is-pinned .project-body { gap:14px; padding-bottom:18px; }
  .portfolio.is-pinned .project-tech { display:none; }
@@ -174,14 +174,20 @@ h2 em { color:#73766c; }
  *,*::before,*::after { animation:none !important; transition:none !important; }
 }
 
-.experience-row { display:grid; grid-template-columns:1fr 2fr auto; gap:40px; padding-block:34px; border-top:1px solid var(--line); }
-.experience-row:last-child { border-bottom:1px solid var(--line); }
+/* Experience: like Portfolio, a static list by default; pinned, each role opens, then folds to its title row. */
+.experience-item { --enter:1; --fold:0; display:grid; grid-template-rows:var(--enter-fr,1fr); }
+.experience-card { position:relative; min-height:0; opacity:var(--enter); transform:translateY(calc((1 - var(--enter)) * 40px)); }
+.experience-card::before,.experience-item:last-child .experience-card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:var(--line); }
+.experience-item:last-child .experience-card::after { top:auto; bottom:0; }
+.experience-row { display:grid; grid-template-columns:1fr 2fr auto; gap:40px; padding-block:calc(34px - 14px * var(--fold)); }
+.experience-fold { display:grid; grid-template-rows:var(--fold-fr,1fr); opacity:calc(1 - var(--fold) * 1.5); }
+.experience-fold > div { min-height:0; overflow:hidden; }
 .experience-date,.experience-type { font:9px/1.8 var(--mono); color:var(--muted); padding-top:5px; }
-.experience-row h3 { font-size:24px; letter-spacing:-.6px; line-height:1.3; }
+.experience-row h3 { font-size:calc(24px - 4px * var(--fold)); letter-spacing:-.6px; line-height:1.3; }
 .experience-company { display:block; font-size:13px; margin-top:9px; }
 .experience-row p { font-size:13px; line-height:1.85; margin-top:17px; max-width:490px; }
 @media (max-width:760px) { .experience-row { grid-template-columns:1fr 2fr; gap:25px; } .experience-type { display:none; } }
-@media (max-width:600px) { .experience-row { grid-template-columns:1fr; gap:12px; padding-block:28px; } .experience-row h3 { font-size:23px; } }
+@media (max-width:600px) { .experience-row { grid-template-columns:1fr; gap:12px; padding-block:calc(28px - 12px * var(--fold)); } .experience-row h3 { font-size:calc(23px - 4px * var(--fold)); } }
 
 .site-footer { background:var(--paper); color:var(--ink); margin-top:40px; padding-bottom:30px; }
 .footer-inner { display:flex; align-items:center; justify-content:space-between; gap:30px; border-top:1px solid var(--line); padding-top:27px; }
