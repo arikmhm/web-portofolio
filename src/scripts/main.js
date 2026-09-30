@@ -82,13 +82,13 @@ const clamp01 = x => Math.min(1, Math.max(0, x));
 // Scrolls to a position with a slow-fast-slow glide, longer for longer distances. The page's CSS smooth scrolling
 // is paused meanwhile so it doesn't fight each frame, and the user's own wheel or touch stops the glide at once.
 const root = document.documentElement;
-const easeInOut = t => t < .5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+const easeInOut = t => (1 - Math.cos(Math.PI * t)) / 2; // gentle: peak speed only ~1.6x the average
 let glideFrame = 0;
 function stopGlide() { cancelAnimationFrame(glideFrame); glideFrame = 0; root.style.scrollBehavior = ''; }
 function glideTo(to) {
   stopGlide();
   const from = window.scrollY, start = performance.now();
-  const duration = Math.min(1200, 500 + Math.abs(to - from) * .3);
+  const duration = Math.min(1600, 800 + Math.abs(to - from) * .4);
   root.style.scrollBehavior = 'auto';
   const step = (now) => {
     const t = Math.min(1, (now - start) / duration);
