@@ -1,5 +1,8 @@
 ---
 // Two copies of the corner arrow: one flies out and the other flies in (see .cta-arrow in global.css).
+// The swap plays on hover and also repeats on its own, unless hoverOnly is set.
+interface Props { hoverOnly?: boolean }
+const { hoverOnly = false } = Astro.props;
 ---
 
-<span class="cta-arrow" aria-hidden="true"><svg class="arrow-icon" viewBox="0 0 24 24" focusable="false"><use href="#arrow-compact" /></svg><svg class="arrow-icon" viewBox="0 0 24 24" focusable="false"><use href="#arrow-compact" /></svg></span>
+<span class:list={['cta-arrow', { 'hover-only': hoverOnly }]} aria-hidden="true"><svg class="arrow-icon" viewBox="0 0 24 24" focusable="false"><use href="#arrow-compact" /></svg><svg class="arrow-icon" viewBox="0 0 24 24" focusable="false"><use href="#arrow-compact" /></svg></span>
