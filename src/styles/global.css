@@ -52,15 +52,22 @@ h2 em { color:#73766c; }
 .blueprint::before { left:0; }
 .blueprint::after { right:.02em; }
 .guide { display:inline-block; }
-.guide::before,.guide::after { left:-16px; right:-24px; }
+.guide::before,.guide::after { left:-16px; right:-96px; }
 .guide::before { border-top:1px solid var(--guide); }
 .guide::after { border-top:1px dashed var(--guide); translate:0 -.7em; }
+.guide ~ .guide::before { border-color:var(--yellow); }
+/* Labels keep the heading's font size so .is-cap can lift by the same .7em; the text itself is the ::before. */
+.guide-label { position:absolute; left:calc(100% + 22px); }
+.guide-label.is-cap { translate:0 -.7em; }
+.guide-label::before { content:attr(data-label); position:absolute; bottom:5px; font:8px/1 var(--mono); letter-spacing:.6px; white-space:nowrap; color:var(--muted); }
 @media (prefers-reduced-motion:no-preference) {
   .guide::before,.guide::after { scale:0 1; transform-origin:left; transition:scale 1s cubic-bezier(.65,0,.35,1); }
   .blueprint::before,.blueprint::after { scale:1 0; transform-origin:top; transition:scale .9s cubic-bezier(.65,0,.35,1) .35s; }
   .guide ~ .guide::before { transition-delay:.12s; }
   .guide::after { transition-delay:.18s; }
   .guide ~ .guide::after { transition-delay:.3s; }
+  .guide-label { opacity:0; transition:opacity .5s .9s; }
+  .is-drawn .guide-label { opacity:1; }
   .blueprint.is-drawn::before,.blueprint.is-drawn::after,.is-drawn .guide::before,.is-drawn .guide::after { scale:1; }
 }
 .section-heading > p { max-width:305px; font-size:14px; }
