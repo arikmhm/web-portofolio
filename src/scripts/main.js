@@ -15,11 +15,12 @@ function updateNavigation() {
 window.addEventListener('scroll', updateNavigation, { passive: true });
 updateNavigation();
 
+const menuSheet = menuPanel.querySelector('.panel-sheet');
 let previousOverflow = '';
 function openMenu() {
   previousOverflow = document.body.style.overflow;
   menuPanel.showModal();
-  menuPanel.offsetWidth; // start the slide from off-screen
+  menuSheet.offsetWidth; // start the slide from off-screen
   menuPanel.classList.add('is-open');
   document.body.style.overflow = 'hidden';
   [menuButton, scrollButton].forEach(button => button.setAttribute('aria-expanded', 'true'));
@@ -30,21 +31,17 @@ function closeMenu() {
   menuPanel.classList.remove('is-open');
   document.body.style.overflow = previousOverflow;
   [menuButton, scrollButton].forEach(button => button.setAttribute('aria-expanded', 'false'));
-  if (parseFloat(getComputedStyle(menuPanel).transitionDuration) === 0) menuPanel.close();
+  if (parseFloat(getComputedStyle(menuSheet).transitionDuration) === 0) menuPanel.close();
 }
-menuPanel.addEventListener('transitionend', (event) => {
-  if (event.target === menuPanel && event.propertyName === 'transform' && !menuPanel.classList.contains('is-open')) menuPanel.close();
+menuSheet.addEventListener('transitionend', (event) => {
+  if (event.target === menuSheet && event.propertyName === 'transform' && !menuPanel.classList.contains('is-open')) menuPanel.close();
 });
 menuButton.addEventListener('click', openMenu);
 scrollButton.addEventListener('click', openMenu);
 menuPanel.querySelector('.panel-close').addEventListener('click', closeMenu);
 menuPanel.addEventListener('cancel', (event) => { event.preventDefault(); closeMenu(); }); // Esc
 menuPanel.addEventListener('click', (event) => {
-  if (event.target.closest('a')) closeMenu();
-  if (event.target === menuPanel) {
-    const rect = menuPanel.getBoundingClientRect();
-    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeMenu();
-  }
+  if (event.target.closest('a') || event.target === menuPanel) closeMenu();
 });
 // Browsers may close the dialog directly (e.g. Esc without a recent click), so tidy up here too.
 menuPanel.addEventListener('close', () => { closeMenu(); updateNavigation(); });

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap');
 :root { --paper:#f7f7f2; --ink:#222320; --muted:#6c6d65; --line:#dcded5; --yellow:#e3c83d; --sans:'DM Sans',Arial,sans-serif; --mono:'IBM Plex Mono',monospace; }
 * { box-sizing:border-box; }
-html { scroll-behavior:smooth; scroll-padding-top:100px; }
+html { scroll-behavior:smooth; scroll-padding-top:100px; scrollbar-gutter:stable; } /* no layout jump when the menu locks scrolling */
 body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.7 var(--sans); -webkit-font-smoothing:antialiased; }
 a { color:inherit; text-decoration:none; }
 button { font:inherit; cursor:pointer; }
@@ -261,11 +261,15 @@ h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var
 .menu-lines::after { bottom:0; }
 .menu-panel.is-open .menu-lines::before { transform:translateY(3.5px) rotate(45deg); }
 .menu-panel.is-open .menu-lines::after { transform:translateY(-3.5px) rotate(-45deg); }
-.menu-panel { position:fixed; inset:0 0 0 auto; margin:0; border:0; border-left:1px solid var(--line); padding:28px 40px 35px; width:min(440px,100%); max-width:100%; height:100dvh; max-height:100dvh; background:var(--paper); color:var(--ink); overflow-y:auto; }
-/* The panel slides in and out (script toggles .is-open, and closes the dialog once the slide ends). */
-.menu-panel[open] { display:flex; flex-direction:column; }
-.menu-panel { transform:translateX(100%); transition:transform .6s cubic-bezier(.65,0,.35,1); }
-.menu-panel.is-open { transform:none; }
+/* The dialog is a transparent full-screen layer: the close button sits exactly where the menu button is, so "=" turns
+   into "×" in place, on top of the sheet that slides in beneath it. Clicks on the bare layer close the menu. */
+.menu-panel { position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none; margin:0; padding:0; border:0; background:none; color:var(--ink); overflow:hidden; }
+.menu-panel .panel-close { position:absolute; top:24px; right:24px; z-index:1; box-shadow:0 3px 16px #22232012; }
+.panel-close:hover { background:#eeefe7; }
+.panel-sheet { display:flex; flex-direction:column; margin-left:auto; width:min(440px,100%); height:100%; padding:28px 40px 35px; border-left:1px solid var(--line); background:var(--paper); overflow-y:auto; }
+/* The sheet slides in and out (script toggles .is-open, and closes the dialog once the slide ends). */
+.panel-sheet { transform:translateX(100%); transition:transform .6s cubic-bezier(.65,0,.35,1); }
+.is-open .panel-sheet { transform:none; }
 .menu-panel::backdrop { background:rgb(24 28 22 / 32%); backdrop-filter:blur(3px); opacity:0; transition:opacity .6s ease; }
 .menu-panel.is-open::backdrop { opacity:1; }
 .panel-links a { opacity:0; transform:translateX(28px); transition:opacity .4s, transform .4s; }
@@ -275,7 +279,7 @@ h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var
 .is-open .panel-links a:nth-child(3) { transition-delay:.3s; }
 .is-open .panel-links a:nth-child(4) { transition-delay:.35s; }
 .is-open .panel-links a:nth-child(5) { transition-delay:.4s; }
-.panel-top { display:flex; justify-content:space-between; align-items:center; }
+.panel-top { display:flex; align-items:center; min-height:48px; }
 .panel-links { display:flex; flex-direction:column; gap:22px; margin-block:50px; }
 .panel-links a { display:flex; gap:24px; align-items:baseline; font-size:34px; letter-spacing:-1px; line-height:1.3; }
 .panel-links a span { font:9px var(--mono); color:var(--muted); letter-spacing:0; }
@@ -286,7 +290,9 @@ h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var
 @keyframes menu-button-in { from { opacity:0; transform:scale(.85); } to { opacity:1; transform:scale(1); } }
 @media (max-width:600px) {
  .scroll-menu { top:18px; right:18px; width:44px; height:44px; }
- .menu-panel { width:min(390px,90vw); padding:20px 25px 28px; }
+ .panel-sheet { width:min(390px,90vw); padding:20px 25px 28px; }
+ .panel-top { min-height:44px; }
+ .menu-panel .panel-close { top:18px; right:18px; }
  .panel-links { gap:23px; margin-block:40px; }
  .panel-links a { font-size:29px; gap:18px; }
  .panel-close { width:44px; height:44px; }
