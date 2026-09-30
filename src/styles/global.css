@@ -43,32 +43,16 @@ h2 { font-size:clamp(38px,4.4vw,62px); line-height:1.1; letter-spacing:-.05em; }
 h2 em { color:#73766c; }
 .section-heading { display:flex; justify-content:space-between; gap:50px; align-items:flex-end; margin-bottom:43px; }
 .section-heading h2,.about h2 { margin-top:22px; }
-/* Type guides around the heading, like a layout sketch: a baseline and cap line per row, and
-   the text edges. Each .guide sits at its row's baseline; its lines take their vertical position
-   from there and their horizontal extent from the heading. */
-.blueprint { position:relative; isolation:isolate; width:-webkit-fit-content; width:fit-content; --guide:#cfd2c6; }
-.blueprint::before,.blueprint::after,.guide::before,.guide::after { content:""; position:absolute; z-index:-1; }
-.blueprint::before,.blueprint::after { top:-.18em; bottom:-.3em; border-left:1px dashed var(--guide); }
-.blueprint::before { left:0; }
-.blueprint::after { right:.02em; }
+/* A baseline under each row of the heading, like a layout sketch; the last one in yellow. Each .guide
+   sits at its row's baseline, so its line takes its height from there and its width from the heading. */
+.blueprint { position:relative; isolation:isolate; width:-webkit-fit-content; width:fit-content; }
 .guide { display:inline-block; }
-.guide::before,.guide::after { left:-16px; right:-96px; }
-.guide::before { border-top:1px solid var(--guide); }
-.guide::after { border-top:1px dashed var(--guide); translate:0 -.7em; }
+.guide::before { content:""; position:absolute; z-index:-1; left:-16px; right:-32px; border-top:1px solid #cfd2c6; }
 .guide ~ .guide::before { border-color:var(--yellow); }
-/* Labels keep the heading's font size so .is-cap can lift by the same .7em; the text itself is the ::before. */
-.guide-label { position:absolute; left:calc(100% + 22px); }
-.guide-label.is-cap { translate:0 -.7em; }
-.guide-label::before { content:attr(data-label); position:absolute; bottom:5px; font:8px/1 var(--mono); letter-spacing:.6px; white-space:nowrap; color:var(--muted); }
 @media (prefers-reduced-motion:no-preference) {
-  .guide::before,.guide::after { scale:0 1; transform-origin:left; transition:scale 1s cubic-bezier(.65,0,.35,1); }
-  .blueprint::before,.blueprint::after { scale:1 0; transform-origin:top; transition:scale .9s cubic-bezier(.65,0,.35,1) .35s; }
-  .guide ~ .guide::before { transition-delay:.12s; }
-  .guide::after { transition-delay:.18s; }
-  .guide ~ .guide::after { transition-delay:.3s; }
-  .guide-label { opacity:0; transition:opacity .5s .9s; }
-  .is-drawn .guide-label { opacity:1; }
-  .blueprint.is-drawn::before,.blueprint.is-drawn::after,.is-drawn .guide::before,.is-drawn .guide::after { scale:1; }
+  .guide::before { scale:0 1; transform-origin:left; transition:scale 1s cubic-bezier(.65,0,.35,1); }
+  .guide ~ .guide::before { transition-delay:.15s; }
+  .is-drawn .guide::before { scale:1; }
 }
 .section-heading > p { max-width:305px; font-size:14px; }
 /* Portfolio: each project has a title row and a body (media + details). Static list by default; with .is-pinned
