@@ -89,7 +89,7 @@ h2 em { color:#73766c; }
 /* The next section scrolls up over the frame's empty lower part, so only the list itself takes clicks. */
 .is-pinned .pin-frame { pointer-events:none; }
 .is-pinned .pin-frame > * { pointer-events:auto; }
-/* Folded items in any pinned stack reopen on click or hover (see pinnedStack in main.js). */
+/* Folded items in any pinned stack reopen on click (see pinnedStack in main.js). */
 .is-pinned .is-folded { cursor:pointer; }
 @media (hover:hover) { .is-pinned .is-folded:hover h3 { color:var(--ink); } }
 .portfolio.is-pinned .project-media { aspect-ratio:auto; --media-h:clamp(180px,calc(100vh - 430px),380px); --media-h:clamp(180px,calc(100svh - 430px),380px); }

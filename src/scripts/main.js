@@ -79,6 +79,27 @@ const TRANSITION = .6; // share of each item's scroll spent moving; the rest hol
 const ease = x => x * x * (3 - 2 * x);
 const clamp01 = x => Math.min(1, Math.max(0, x));
 
+// Scrolls to a position with a slow-fast-slow glide, longer for longer distances. The page's CSS smooth scrolling
+// is paused meanwhile so it doesn't fight each frame, and the user's own wheel or touch stops the glide at once.
+const root = document.documentElement;
+const easeInOut = t => t < .5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+let glideFrame = 0;
+function stopGlide() { cancelAnimationFrame(glideFrame); glideFrame = 0; root.style.scrollBehavior = ''; }
+function glideTo(to) {
+  stopGlide();
+  const from = window.scrollY, start = performance.now();
+  const duration = Math.min(1200, 500 + Math.abs(to - from) * .3);
+  root.style.scrollBehavior = 'auto';
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / duration);
+    window.scrollTo(0, from + (to - from) * easeInOut(t));
+    if (t < 1) glideFrame = requestAnimationFrame(step); else stopGlide();
+  };
+  glideFrame = requestAnimationFrame(step);
+}
+window.addEventListener('wheel', stopGlide, { passive:true });
+window.addEventListener('touchstart', stopGlide, { passive:true });
+
 function pinnedStack(section, track, pin, items, list) {
   let end = items.length + .2; // the last item folds too, then all titles hold briefly before releasing the page
   let target = 0, current = 0, frame = 0;
@@ -120,22 +141,14 @@ function pinnedStack(section, track, pin, items, list) {
     frame = current === target ? 0 : requestAnimationFrame(render);
   }
 
-  // A folded item can be reopened without scrolling back by hand: click it, or rest the mouse on it.
-  // Hover only counts after real mouse movement, so titles sliding under a still cursor while scrolling don't pull the page back.
+  // A folded item reopens on click: the page glides back to where that item is shown in full.
   const isFolded = i => current > i + 1 - TRANSITION;
-  let hoverTimer = 0, lastScroll = 0;
-  function openItem(i) {
-    const stepLength = (track.offsetHeight - pin.offsetHeight) / end;
-    window.scrollTo({ top: track.getBoundingClientRect().top + window.scrollY + (i + .2) * stepLength, behavior: 'smooth' });
-  }
   items.forEach((item, i) => {
-    item.addEventListener('click', () => { if (pinnable.matches && isFolded(i)) openItem(i); });
-    item.addEventListener('pointermove', (event) => {
-      if (event.pointerType !== 'mouse' || !(event.movementX || event.movementY) || !pinnable.matches || !isFolded(i)) return;
-      clearTimeout(hoverTimer);
-      hoverTimer = setTimeout(() => { if (isFolded(i) && Date.now() - lastScroll > 400) openItem(i); }, 350);
+    item.addEventListener('click', () => {
+      if (!pinnable.matches || !isFolded(i)) return;
+      const stepLength = (track.offsetHeight - pin.offsetHeight) / end;
+      glideTo(track.getBoundingClientRect().top + window.scrollY + (i + .2) * stepLength);
     });
-    item.addEventListener('pointerleave', () => clearTimeout(hoverTimer));
   });
 
   function setup() {
@@ -148,7 +161,7 @@ function pinnedStack(section, track, pin, items, list) {
     read();
     current = target;
   }
-  window.addEventListener('scroll', () => { lastScroll = Date.now(); clearTimeout(hoverTimer); if (pinnable.matches) read(); }, { passive:true });
+  window.addEventListener('scroll', () => { if (pinnable.matches) read(); }, { passive:true });
   window.addEventListener('resize', () => {
     if (!pinnable.matches) return;
     if (list) fitRelease(); // render() restores the item styles on the next frame
