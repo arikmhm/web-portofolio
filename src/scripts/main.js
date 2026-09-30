@@ -58,8 +58,8 @@ contactForm.addEventListener('submit', async (event) => {
   sendButton.disabled = false;
 });
 
-// Local time next to the email, so visitors in other time zones know when they'd reach me.
-const localTime = document.querySelector('.contact-local');
+// Local time in the footer, so visitors in other time zones know when they'd reach me.
+const localTime = document.querySelector('.local-time');
 const timeFormat = new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Jakarta', hour:'2-digit', minute:'2-digit' });
 function showLocalTime() { localTime.querySelector('time').textContent = timeFormat.format(new Date()); }
 showLocalTime();
