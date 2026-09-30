@@ -40,21 +40,6 @@ menuPanel.addEventListener('close', () => {
 
 document.querySelector('#year').textContent = new Date().getFullYear();
 
-const copyButton = document.querySelector('.copy-email');
-const copyStatus = document.querySelector('.copy-status');
-
-if (navigator.clipboard?.writeText) {
-  copyButton.hidden = false;
-  copyButton.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(copyButton.dataset.email);
-      copyStatus.textContent = 'Email copied.';
-    } catch {
-      copyStatus.textContent = 'Could not copy. Please select the email address above.';
-    }
-  });
-}
-
 // Contact form: send without leaving the page (the form still posts on its own without JavaScript).
 const contactForm = document.querySelector('.contact-form');
 const formStatus = contactForm.querySelector('.form-status');
