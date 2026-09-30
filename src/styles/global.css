@@ -43,10 +43,9 @@ h2 { font-size:clamp(38px,4.4vw,62px); line-height:1.1; letter-spacing:-.05em; }
 h2 em { color:#73766c; }
 .section-heading { display:flex; justify-content:space-between; gap:50px; align-items:flex-end; margin-bottom:43px; }
 .section-heading h2,.about h2 { margin-top:22px; }
-/* "shape." starts as an outline, like a sketch, and fills in once the heading comes into view. */
+/* "took shape." starts loose and blurred, and pulls together as the heading scrolls into view. */
 @media (prefers-reduced-motion:no-preference) {
-  #work-title em { display:inline-block; padding-right:.1em; margin-right:-.1em; color:transparent; -webkit-text-stroke:1px #73766c; background:linear-gradient(#73766c,#73766c) no-repeat 0 0 / 0 100%; -webkit-background-clip:text; background-clip:text; transition:background-size 1.4s cubic-bezier(.65,0,.35,1) .2s, -webkit-text-stroke-color .4s 1.4s; }
-  #work-title.is-shaped em { background-size:100% 100%; -webkit-text-stroke-color:transparent; }
+  .heading-gather { --p:1; white-space:nowrap; letter-spacing:calc(-.05em + (1 - var(--p)) * .18em); filter:blur(calc((1 - var(--p)) * 7px)); opacity:calc(.2 + var(--p) * .8); }
 }
 .section-heading > p { max-width:305px; font-size:14px; }
 /* Portfolio: each project has a title row and a body (media + details). Static list by default; with .is-pinned
