@@ -201,22 +201,9 @@ async function runHeroSwap() {
 }
 if (matchMedia('(prefers-reduced-motion:no-preference)').matches) document.fonts.ready.then(runHeroSwap);
 
-// Progress runs from 0 as the heading enters at the bottom to 1 once it reaches mid-screen.
-const gather = document.querySelector('.heading-gather');
-let gatherTarget = 1, gatherCurrent = 1, gatherFrame = 0;
-function readGather() {
-  gatherTarget = clamp01((innerHeight * .95 - gather.getBoundingClientRect().top) / (innerHeight * .5));
-  if (!gatherFrame) gatherFrame = requestAnimationFrame(renderGather);
-}
-function renderGather() {
-  gatherCurrent += (gatherTarget - gatherCurrent) * .12;
-  if (Math.abs(gatherTarget - gatherCurrent) < .001) gatherCurrent = gatherTarget;
-  gather.style.setProperty('--p', ease(gatherCurrent).toFixed(4));
-  gatherFrame = gatherCurrent === gatherTarget ? 0 : requestAnimationFrame(renderGather);
-}
-if (matchMedia('(prefers-reduced-motion:no-preference)').matches) {
-  addEventListener('scroll', readGather, { passive: true });
-  addEventListener('resize', readGather);
-  readGather();
-  gatherCurrent = gatherTarget;
-}
+const blueprint = document.querySelector('.blueprint');
+new IntersectionObserver(([entry], observer) => {
+  if (!entry.isIntersecting) return;
+  blueprint.classList.add('is-drawn');
+  observer.disconnect();
+}, { threshold: 1, rootMargin: '0px 0px -15% 0px' }).observe(blueprint);

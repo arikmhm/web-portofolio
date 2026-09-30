@@ -43,9 +43,25 @@ h2 { font-size:clamp(38px,4.4vw,62px); line-height:1.1; letter-spacing:-.05em; }
 h2 em { color:#73766c; }
 .section-heading { display:flex; justify-content:space-between; gap:50px; align-items:flex-end; margin-bottom:43px; }
 .section-heading h2,.about h2 { margin-top:22px; }
-/* "took shape." starts loose and blurred, and pulls together as the heading scrolls into view. */
+/* Type guides around the heading, like a layout sketch: a baseline and cap line per row, and
+   the text edges. Each .guide sits at its row's baseline; its lines take their vertical position
+   from there and their horizontal extent from the heading. */
+.blueprint { position:relative; isolation:isolate; width:-webkit-fit-content; width:fit-content; --guide:#cfd2c6; }
+.blueprint::before,.blueprint::after,.guide::before,.guide::after { content:""; position:absolute; z-index:-1; }
+.blueprint::before,.blueprint::after { top:-.18em; bottom:-.3em; border-left:1px dashed var(--guide); }
+.blueprint::before { left:0; }
+.blueprint::after { right:.02em; }
+.guide { display:inline-block; }
+.guide::before,.guide::after { left:-16px; right:-24px; }
+.guide::before { border-top:1px solid var(--guide); }
+.guide::after { border-top:1px dashed var(--guide); translate:0 -.7em; }
 @media (prefers-reduced-motion:no-preference) {
-  .heading-gather { --p:1; white-space:nowrap; letter-spacing:calc(-.05em + (1 - var(--p)) * .18em); filter:blur(calc((1 - var(--p)) * 7px)); opacity:calc(.2 + var(--p) * .8); }
+  .guide::before,.guide::after { scale:0 1; transform-origin:left; transition:scale 1s cubic-bezier(.65,0,.35,1); }
+  .blueprint::before,.blueprint::after { scale:1 0; transform-origin:top; transition:scale .9s cubic-bezier(.65,0,.35,1) .35s; }
+  .guide ~ .guide::before { transition-delay:.12s; }
+  .guide::after { transition-delay:.18s; }
+  .guide ~ .guide::after { transition-delay:.3s; }
+  .blueprint.is-drawn::before,.blueprint.is-drawn::after,.is-drawn .guide::before,.is-drawn .guide::after { scale:1; }
 }
 .section-heading > p { max-width:305px; font-size:14px; }
 /* Portfolio: each project has a title row and a body (media + details). Static list by default; with .is-pinned
