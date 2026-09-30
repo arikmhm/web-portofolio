@@ -200,10 +200,3 @@ async function runHeroSwap() {
   }
 }
 if (matchMedia('(prefers-reduced-motion:no-preference)').matches) document.fonts.ready.then(runHeroSwap);
-
-const blueprint = document.querySelector('.blueprint');
-new IntersectionObserver(([entry], observer) => {
-  if (!entry.isIntersecting) return;
-  blueprint.classList.add('is-drawn');
-  observer.disconnect();
-}, { threshold: 1, rootMargin: '0px 0px -15% 0px' }).observe(blueprint);
