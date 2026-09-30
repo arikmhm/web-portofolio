@@ -336,11 +336,18 @@ h1.is-stacked em { display:block; }
    The hero CTA also plays it once each time the heading settles. */
 .cta-button { display:inline-flex; align-items:center; gap:28px; margin-top:30px; padding:14px 19px; background:var(--ink); color:white; font-size:12px; font-weight:500; transition:background .2s; }
 .cta-button:hover { background:#44463d; }
-.cta-arrow { display:grid; overflow:hidden; }
+.cta-arrow { display:grid; flex-shrink:0; overflow:hidden; }
 .cta-arrow .arrow-icon { grid-area:1 / 1; transition:transform .45s cubic-bezier(.65,0,.35,1); }
 .cta-arrow .arrow-icon:last-child { transform:translate(-120%,120%); }
-a:is(:hover,:focus-visible) .cta-arrow .arrow-icon:first-child { transform:translate(120%,-120%); }
-a:is(:hover,:focus-visible) .cta-arrow .arrow-icon:last-child { transform:none; }
+:is(a,button):is(:hover,:focus-visible) .cta-arrow .arrow-icon:first-child { transform:translate(120%,-120%); }
+:is(a,button):is(:hover,:focus-visible) .cta-arrow .arrow-icon:last-child { transform:none; }
+/* Without hover, the same swap repeats every few seconds. The hero button keeps its own nudge, timed with the heading. */
+@media (prefers-reduced-motion:no-preference) {
+  :is(a,button):not(.hero-cta):not(:hover):not(:focus-visible) .cta-arrow .arrow-icon:first-child { animation:arrow-loop-out 3.6s cubic-bezier(.65,0,.35,1) infinite; }
+  :is(a,button):not(.hero-cta):not(:hover):not(:focus-visible) .cta-arrow .arrow-icon:last-child { animation:arrow-loop-in 3.6s cubic-bezier(.65,0,.35,1) infinite; }
+}
+@keyframes arrow-loop-out { 0% { transform:none; } 14%,100% { transform:translate(120%,-120%); } }
+@keyframes arrow-loop-in { 0%,5% { transform:translate(-120%,120%); } 20%,100% { transform:none; } }
 .hero-cta.is-nudging .arrow-icon:first-child { animation:cta-out .7s cubic-bezier(.65,0,.35,1); }
 .hero-cta.is-nudging .arrow-icon:last-child { animation:cta-in .7s cubic-bezier(.65,0,.35,1); }
 @keyframes cta-out { 70%,100% { transform:translate(120%,-120%); } }

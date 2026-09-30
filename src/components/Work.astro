@@ -68,7 +68,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
                   <div class="project-info">
                     <p>{project.summary}</p>
                     <ul class="project-tech" aria-label="Built with">{project.tech.map((name) => <li>{name}</li>)}</ul>
-                    {project.link && <a class="project-link" href={project.link.href} target="_blank" rel="noopener">{project.link.label} <span class="cta-arrow" aria-hidden="true"><Arrow /><Arrow /></span></a>}
+                    {project.link && <a class="project-link" href={project.link.href} target="_blank" rel="noopener">{project.link.label} <Arrow /></a>}
                   </div>
                 </div>
               </div></div>
