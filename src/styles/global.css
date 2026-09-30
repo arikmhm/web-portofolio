@@ -46,6 +46,10 @@ h2 em { color:#73766c; }
 .section-heading h2,.about h2 { margin-top:22px; }
 /* The heading's full stop is a yellow dot. */
 .heading-dot { display:inline-block; width:.15em; height:.15em; margin-left:.05em; border-radius:50%; background:var(--yellow); }
+/* Approach: an unclear "question?" in grey resolves into a solid "solution" with the yellow dot. */
+#solution-title .heading-muted { color:#73766c; }
+#solution-title .heading-q { margin-left:.03em; font-size:.5em; font-weight:600; vertical-align:.85em; line-height:0; color:var(--yellow); }
+#solution-title em { color:var(--ink); }
 .section-heading > p { max-width:305px; font-size:14px; }
 /* Portfolio: each project has a title row and a body (media + details). Static list by default; with .is-pinned
    the list holds while each project opens, then folds to its title row, like Approach. */
