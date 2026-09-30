@@ -200,3 +200,10 @@ async function runHeroSwap() {
   }
 }
 if (matchMedia('(prefers-reduced-motion:no-preference)').matches) document.fonts.ready.then(runHeroSwap);
+
+const workTitle = document.querySelector('#work-title');
+new IntersectionObserver(([entry], observer) => {
+  if (!entry.isIntersecting) return;
+  workTitle.classList.add('is-shaped');
+  observer.disconnect();
+}, { threshold: 1, rootMargin: '0px 0px -15% 0px' }).observe(workTitle);
