@@ -115,21 +115,40 @@ function pinnedStack(section, track, pin, items, list) {
       item.style.setProperty('--enter-fr', `${enter.toFixed(4)}fr`);
       item.style.setProperty('--fold', fold.toFixed(4));
       item.style.setProperty('--fold-fr', `${(1 - fold).toFixed(4)}fr`);
+      item.classList.toggle('is-folded', isFolded(i));
     });
     frame = current === target ? 0 : requestAnimationFrame(render);
   }
+
+  // A folded item can be reopened without scrolling back by hand: click it, or rest the mouse on it.
+  // Hover only counts after real mouse movement, so titles sliding under a still cursor while scrolling don't pull the page back.
+  const isFolded = i => current > i + 1 - TRANSITION;
+  let hoverTimer = 0, lastScroll = 0;
+  function openItem(i) {
+    const stepLength = (track.offsetHeight - pin.offsetHeight) / end;
+    window.scrollTo({ top: track.getBoundingClientRect().top + window.scrollY + (i + .2) * stepLength, behavior: 'smooth' });
+  }
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => { if (pinnable.matches && isFolded(i)) openItem(i); });
+    item.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse' || !(event.movementX || event.movementY) || !pinnable.matches || !isFolded(i)) return;
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(() => { if (isFolded(i) && Date.now() - lastScroll > 400) openItem(i); }, 350);
+    });
+    item.addEventListener('pointerleave', () => clearTimeout(hoverTimer));
+  });
 
   function setup() {
     section.classList.toggle('is-pinned', pinnable.matches);
     if (!pinnable.matches) {
       track.style.marginBottom = '';
-      return items.forEach(item => item.removeAttribute('style'));
+      return items.forEach(item => { item.removeAttribute('style'); item.classList.remove('is-folded'); });
     }
     if (list) fitRelease();
     read();
     current = target;
   }
-  window.addEventListener('scroll', () => { if (pinnable.matches) read(); }, { passive:true });
+  window.addEventListener('scroll', () => { lastScroll = Date.now(); clearTimeout(hoverTimer); if (pinnable.matches) read(); }, { passive:true });
   window.addEventListener('resize', () => {
     if (!pinnable.matches) return;
     if (list) fitRelease(); // render() restores the item styles on the next frame
