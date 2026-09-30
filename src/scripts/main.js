@@ -200,3 +200,10 @@ async function runHeroSwap() {
   }
 }
 if (matchMedia('(prefers-reduced-motion:no-preference)').matches) document.fonts.ready.then(runHeroSwap);
+
+// The hero stays put while the next sections scroll over it. When it is taller than the
+// screen, it sticks by its bottom edge instead so the call to action is never hidden.
+const hero = document.querySelector('.hero');
+function fitStickyHero() { hero.style.setProperty('--hero-top', `${Math.min(0, innerHeight - hero.offsetHeight)}px`); }
+addEventListener('resize', fitStickyHero);
+new ResizeObserver(fitStickyHero).observe(hero);

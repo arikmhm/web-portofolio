@@ -29,7 +29,8 @@ em { font-family:Georgia,serif; font-weight:400; }
 .nav-contact { display:inline-flex; align-items:center; gap:25px; padding:11px 17px; background:var(--ink); color:white; margin-left:15px; }
 .nav-contact:hover { background:#44463d; }
 .menu-toggle { display:none; background:none; border:0; padding:12px 0; font-size:12px; }
-.hero { padding-top:51px; }
+.hero { padding-top:51px; position:sticky; top:var(--hero-top,0); }
+.page-cover { position:relative; z-index:1; background:var(--paper); }
 .hero-topline { display:flex; justify-content:space-between; gap:25px; align-items:center; }
 .edition { font:9px var(--mono); color:var(--muted); }
 h1 { font-size:clamp(68px,8.7vw,125px); line-height:1.04; letter-spacing:-.067em; margin-top:36px; }
