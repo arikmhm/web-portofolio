@@ -109,15 +109,19 @@ h2 em { color:#73766c; }
 .about-body .about-lead { font-size:clamp(18px,1.6vw,21px); line-height:1.6; letter-spacing:-.3px; color:var(--ink); }
 .experience { border-top:1px solid var(--line); }
 .contact { background:#252923; color:var(--paper); padding:43px 50px 55px; }
-.contact-top { display:flex; justify-content:space-between; align-items:center; }
+.contact-top { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px 20px; }
+.contact-status { display:inline-flex; align-items:center; gap:10px; }
 .contact .eyebrow { color:#b6bcae; }
 .contact-dot { width:8px; height:8px; border-radius:50%; background:var(--yellow); }
 .contact-main { display:grid; grid-template-columns:1fr 1fr; align-items:end; gap:60px; margin-top:36px; }
 .contact h2 { font-size:clamp(65px,7.8vw,110px); }
 .contact h2 em { color:var(--paper); }
 .contact p { font-size:13px; color:#b6bcae; }
-.contact-link { display:flex; align-items:center; justify-content:space-between; gap:15px; font-size:19px; padding-block:19px 12px; border-bottom:1px solid #697161; }
+.contact-link { display:flex; align-items:center; justify-content:space-between; gap:15px; font-size:clamp(22px,2.3vw,32px); letter-spacing:-.02em; padding-block:19px 12px; border-bottom:1px solid #697161; transition:border-color .25s; }
+.contact-link:is(:hover,:focus-visible) { border-color:var(--yellow); }
 .copy-email { border:0; background:none; color:#b6bcae; font-size:10px; padding:10px 0 0; }
+.contact-meta { display:flex; justify-content:space-between; align-items:baseline; gap:15px; }
+.contact-local { margin-left:auto; font:9px/1.6 var(--mono); letter-spacing:.6px; color:#b6bcae; white-space:nowrap; }
 .copy-status { display:block; font-size:10px; color:#b6bcae; }
 @media (max-width:1000px) {
  .container { width:calc(100% - 72px); }
@@ -126,7 +130,7 @@ h2 em { color:#73766c; }
  .nav-contact { margin-left:0; }
  .contact { padding:35px; }
  .contact-main { gap:30px; }
- .contact-link { font-size:16px; }
+ .contact-link { font-size:clamp(20px,2.6vw,26px); }
 }
 @media (max-width:760px) {
  .about h2 { font-size:min(38px,5.3vw); } /* keeps the aligned heading inside its narrow column */
@@ -167,7 +171,7 @@ h2 em { color:#73766c; }
  .contact { padding:28px 24px 35px; }
  .contact-main { margin-top:25px; }
  .contact h2 { font-size:72px; }
- .contact-link { font-size:clamp(13px,3.7vw,18px); }
+ .contact-link { font-size:clamp(15px,5.4vw,24px); }
 }
 @media (prefers-reduced-motion:reduce) {
  html { scroll-behavior:auto; }

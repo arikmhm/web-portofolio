@@ -55,6 +55,14 @@ if (navigator.clipboard?.writeText) {
   });
 }
 
+// Local time next to the email, so visitors in other time zones know when they'd reach me.
+const localTime = document.querySelector('.contact-local');
+const timeFormat = new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Jakarta', hour:'2-digit', minute:'2-digit' });
+function showLocalTime() { localTime.querySelector('time').textContent = timeFormat.format(new Date()); }
+showLocalTime();
+localTime.hidden = false;
+setInterval(showLocalTime, 15000);
+
 // A second identical group makes the logo loop seamless, without extra announcements.
 const techGroup = document.querySelector('.tech-group');
 const techCopy = techGroup.cloneNode(true);
