@@ -209,8 +209,9 @@ h2 em { color:#73766c; }
 .footer-identity .wordmark { font-size:24px; }
 .footer-identity p { font-size:11px; color:var(--muted); margin-top:7px; }
 .footer-nav { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:20px; font-size:11px; }
-.footer-nav a { display:inline-flex; align-items:center; gap:5px; }
-.footer-nav .arrow-icon { width:.9em; height:.9em; }
+/* Footer and menu-panel links share one look: small text, arrow icon for outside links. */
+:is(.footer-nav,.panel-bottom) a { display:inline-flex; align-items:center; gap:5px; }
+:is(.footer-nav,.panel-bottom) .arrow-icon { width:.9em; height:.9em; }
 .footer-meta { display:grid; justify-items:end; gap:4px; }
 .local-time { font:9px/1.6 var(--mono); letter-spacing:.6px; color:var(--muted); white-space:nowrap; }
 .footer-copyright { font-size:10px; color:var(--muted); white-space:nowrap; }
@@ -284,8 +285,7 @@ h1 mark { display:inline-block; color:var(--ink); background:linear-gradient(var
 .panel-links a span { font:9px var(--mono); color:var(--muted); letter-spacing:0; }
 .panel-links a:hover { color:var(--muted); }
 .panel-bottom { margin-top:auto; border-top:1px solid var(--line); padding-top:25px; }
-.panel-bottom > a { display:block; width:max-content; font-size:14px; margin-top:12px; }
-.panel-bottom > div { display:flex; gap:26px; margin-top:20px; font-size:11px; }
+.panel-bottom > div { display:flex; flex-wrap:wrap; gap:16px 20px; margin-top:16px; font-size:11px; }
 @keyframes menu-button-in { from { opacity:0; transform:scale(.85); } to { opacity:1; transform:scale(1); } }
 @media (max-width:600px) {
  .scroll-menu { top:18px; right:18px; width:44px; height:44px; }
