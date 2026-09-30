@@ -5,6 +5,8 @@ import vercel from '@astrojs/vercel';
 // The site is static; only /api/contact runs on demand (see src/pages/api/contact.ts).
 export default defineConfig({
   adapter: vercel(),
+  // The dev toolbar sits over the footer in local previews.
+  devToolbar: { enabled: false },
   env: {
     schema: {
       RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
