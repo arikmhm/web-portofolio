@@ -19,24 +19,35 @@ let previousOverflow = '';
 function openMenu() {
   previousOverflow = document.body.style.overflow;
   menuPanel.showModal();
+  menuPanel.offsetWidth; // start the slide from off-screen
+  menuPanel.classList.add('is-open');
   document.body.style.overflow = 'hidden';
   [menuButton, scrollButton].forEach(button => button.setAttribute('aria-expanded', 'true'));
 }
-menuButton.addEventListener('click', openMenu);
-scrollButton.addEventListener('click', openMenu);
-menuPanel.querySelector('.panel-close').addEventListener('click', () => menuPanel.close());
-menuPanel.addEventListener('click', (event) => {
-  if (event.target.closest('a')) menuPanel.close();
-  if (event.target === menuPanel) {
-    const rect = menuPanel.getBoundingClientRect();
-    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) menuPanel.close();
-  }
-});
-menuPanel.addEventListener('close', () => {
+// Slide out first, then close the dialog (at once when motion is reduced and nothing transitions).
+function closeMenu() {
+  if (!menuPanel.classList.contains('is-open')) return;
+  menuPanel.classList.remove('is-open');
   document.body.style.overflow = previousOverflow;
   [menuButton, scrollButton].forEach(button => button.setAttribute('aria-expanded', 'false'));
-  updateNavigation();
+  if (parseFloat(getComputedStyle(menuPanel).transitionDuration) === 0) menuPanel.close();
+}
+menuPanel.addEventListener('transitionend', (event) => {
+  if (event.target === menuPanel && event.propertyName === 'transform' && !menuPanel.classList.contains('is-open')) menuPanel.close();
 });
+menuButton.addEventListener('click', openMenu);
+scrollButton.addEventListener('click', openMenu);
+menuPanel.querySelector('.panel-close').addEventListener('click', closeMenu);
+menuPanel.addEventListener('cancel', (event) => { event.preventDefault(); closeMenu(); }); // Esc
+menuPanel.addEventListener('click', (event) => {
+  if (event.target.closest('a')) closeMenu();
+  if (event.target === menuPanel) {
+    const rect = menuPanel.getBoundingClientRect();
+    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeMenu();
+  }
+});
+// Browsers may close the dialog directly (e.g. Esc without a recent click), so tidy up here too.
+menuPanel.addEventListener('close', () => { closeMenu(); updateNavigation(); });
 
 document.querySelector('#year').textContent = new Date().getFullYear();
 
